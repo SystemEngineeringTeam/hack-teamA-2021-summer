@@ -4,7 +4,7 @@ import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 	"errors"
 
-	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt" //パスワードをハッシュ化するために使用
 )
 
 func GetUserInfo(email string) (user models.User, err error) {
