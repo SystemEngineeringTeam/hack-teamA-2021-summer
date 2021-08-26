@@ -3,13 +3,20 @@ package dbfunc
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 	"fmt"
+	"os"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
+	"github.com/joho/godotenv"
 )
 
 func init() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		panic(err)
+	}
+
 	db := sqlConnect()
 	db.AutoMigrate(&models.User{})
 	defer db.Close()
@@ -17,10 +24,10 @@ func init() {
 
 func sqlConnect() (database *gorm.DB) {
 	DBMS := "mysql"
-	USER := "go_test"
-	PASS := "password"
-	PROTOCOL := "tcp(db:3306)"
-	DBNAME := "go_database"
+	USER := os.Getenv("MYSQL_USER")
+	PASS := os.Getenv("MYSQL_PASSWORD")
+	PROTOCOL := os.Getenv("PROTOCOL")
+	DBNAME := os.Getenv("MYSQL_DATABASE")
 
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?charset=utf8&parseTime=true&loc=Asia%2FTokyo"
 
