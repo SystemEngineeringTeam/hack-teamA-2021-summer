@@ -9,17 +9,18 @@ import (
 
 func GetUserInfo(email string) (user models.User, err error) {
 	db := sqlConnect()
+	defer db.Close()
 
 	// データベースからユーザー情報を取得
 	var u models.User
 	err = db.Where("email = ?", email).First(&u).Error
 
-	defer db.Close()
 	return u, err
 }
 
 func PostUser(email string, password string, name string) (err error) {
 	db := sqlConnect()
+	defer db.Close()
 
 	// おなじemailが既に登録されていないか確認
 	var tmp models.User
@@ -38,12 +39,12 @@ func PostUser(email string, password string, name string) (err error) {
 	var u models.User = models.User{Email: email, Password: hashStr, Name: name, Coin: 100}
 	err = db.Create(&u).Error
 
-	defer db.Close()
 	return err
 }
 
 func PutUser(email string, password string, name string) (err error) {
 	db := sqlConnect()
+	defer db.Close()
 
 	// データベースに存在しているか確認
 	var u models.User
@@ -58,7 +59,6 @@ func PutUser(email string, password string, name string) (err error) {
 	// データベースを更新
 	err = db.Model(models.User{}).Where("email = ?", email).Select("email", "name").Updates(models.User{Email: email, Name: name}).Error
 
-	defer db.Close()
 	return err
 }
 

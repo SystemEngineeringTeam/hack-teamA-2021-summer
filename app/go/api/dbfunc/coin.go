@@ -6,6 +6,7 @@ import (
 
 func PostCoinInfo(email string, total int) (err error) {
 	db := sqlConnect()
+	defer db.Close()
 
 	// データベースからユーザー情報を取得
 	var u models.User
@@ -15,6 +16,5 @@ func PostCoinInfo(email string, total int) (err error) {
 	// データベースを更新
 	err = db.Model(models.User{}).Where("email = ?", email).Select("Coin").Updates(models.User{Coin: total}).Error
 
-	defer db.Close()
 	return err
 }
