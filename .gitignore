@@ -1,3 +1,4 @@
 .vscode
 app/mysql/data
 *.env
+.DS_Store
