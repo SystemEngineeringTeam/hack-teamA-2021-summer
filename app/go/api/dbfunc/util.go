@@ -50,7 +50,5 @@ func sqlConnect() (database *gorm.DB) {
 			db, err = gorm.Open(DBMS, CONNECT)
 		}
 	}
-	fmt.Println("DB接続成功")
-
 	return db
 }
