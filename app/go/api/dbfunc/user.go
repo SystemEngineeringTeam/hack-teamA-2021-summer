@@ -13,9 +13,10 @@ func GetUserInfo(email string) (user models.User, err error) {
 
 	// データベースからユーザー情報を取得
 	var u models.User
-	err = db.Where("email = ?", email).First(&u).Error
+	err = db.Where("email = ?", email).First(&u).Error //e-mailを元にユーザー情報を取得
 
-	return u, err
+	defer db.Close()
+	return u, err //接続できなかったり、データがないときはエラーを出す
 }
 
 func PostUser(email string, password string, name string) (err error) {

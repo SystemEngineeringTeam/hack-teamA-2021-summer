@@ -4,11 +4,11 @@ import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 )
 
-func PostCoinInfo(email string, total int) (err error) {
+func PostCoinInfo(email string, total int) (err error) {//引数と返り値
 	db := sqlConnect()
 	defer db.Close()
 
-	// データベースからユーザー情報を取得
+	// データベースからユーザーが存在するかを確認
 	var u models.User
 	if err = db.Where("email = ?", email).First(&u).Error; err != nil {
 		return err

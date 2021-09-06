@@ -29,7 +29,9 @@ services:
             - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
         ports:
             - 3306:3306
+<<<<<<< Updated upstream
         platform: linux/x86_64
+=======
 
 volumes:
     db-data:

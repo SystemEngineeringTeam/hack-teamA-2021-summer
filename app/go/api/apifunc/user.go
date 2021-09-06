@@ -18,7 +18,7 @@ func UserGet(c echo.Context) error {
 	var params UserGetParams
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
-	}
+	}//データが足りないときにエラーを出す
 
 	// 送られてきたデータを元にDBから取得する
 	user, err := dbfunc.GetUserInfo(params.Email)
