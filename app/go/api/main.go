@@ -27,6 +27,7 @@ func main() {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
 	e.POST("/coin", apifunc.CoinPost)
