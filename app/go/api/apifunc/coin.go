@@ -9,8 +9,8 @@ import (
 )
 
 type CoinPostParams struct { //
-	Email string `json:"email"`
-	Total int    `json:"total"`
+	Email string `json:"email" validate:"required"`
+	Total int    `json:"total" validate:"required"`
 }
 
 func CoinPost(c echo.Context) error {
@@ -18,6 +18,11 @@ func CoinPost(c echo.Context) error {
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
+
+	if err := c.Validate(&params); err != nil {
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+	}
+
 	err := dbfunc.PostCoinInfo(params.Email, params.Total)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
