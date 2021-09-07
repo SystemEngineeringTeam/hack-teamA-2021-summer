@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-
+import Main from '../views/Main.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,6 +24,11 @@ const routes = [
     name: 'Login',
     component: Login
     
+  },
+  {
+    path: '/main',
+    name: 'Main',
+    component: Main
   },
 ]
 
