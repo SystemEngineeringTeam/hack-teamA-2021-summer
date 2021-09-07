@@ -2,9 +2,11 @@ package apifunc
 
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/dbfunc"
+	"time"
 
 	"net/http"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 )
 
@@ -13,6 +15,7 @@ type LoginPostParams struct {
 	Password string `json:"password" validate:"required"`
 }
 
+//認証が必要なAPIにアクセスするためトークンを返す
 func LoginPost(c echo.Context) error {
 	var params LoginPostParams
 	if err := c.Bind(&params); err != nil {
@@ -32,5 +35,16 @@ func LoginPost(c echo.Context) error {
 	if !dbfunc.ComparePassword(user.Password, params.Password) {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パスワードが正しくありません"})
 	}
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "成功しました"}) // フロントに返す値
+
+	token := jwt.New(jwt.SigningMethodHS256)
+	climes := token.Claims.(jwt.MapClaims)
+	climes["uid"] = user.ID
+	climes["email"] = user.Email
+	climes["exp"] = time.Now().Add(time.Hour * 24 * 3).Unix()
+	t, err := token.SignedString([]byte("secret"))
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "成功しました", "token": t}) // フロントに返す値
 }

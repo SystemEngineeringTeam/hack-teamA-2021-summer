@@ -35,15 +35,23 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Request: %v\n", string(reqBody))
 	}))
 
+	requiredAuth := e.Group("")
+
+	requiredAuth.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte("secret"),
+	}))
+
+	// requiredAuth
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
-	e.POST("/coin", apifunc.CoinPost)
+	requiredAuth.POST("/coin", apifunc.CoinPost)
 
 	// http://localhost:8080/user : GET apifunc->user.go->UserGet()
 	e.GET("/user", apifunc.UserGet)
 	// http://localhost:8080/user : POST apifunc->user.go->UserPost()
 	e.POST("/user", apifunc.UserPost)
+	// requiredAuth
 	// http://localhost:8080/user : PUT apifunc->user.go->UserPut()
-	e.PUT("/user", apifunc.UserPut)
+	requiredAuth.PUT("/user", apifunc.UserPut)
 
 	// http://localhost:8080/login : POST apifunc->login.go->LoginPost()
 	e.POST("/login", apifunc.LoginPost)
