@@ -32,28 +32,35 @@
 </template>
 
 <script>
+// 覚える
 export default {
   data: () => {
     return {
+        // 変数定義（今回はメールアドレスとパスワード）
       mail: "",
       password: "",
     };
   },
+// メゾット定義
   methods: {
     login() {
       this.axios
+    //   今回はポストに接続するので.postにする。第一引数に宛先を指定、第二引数に送りたいデータを指定する
         .post("http://localhost:8080/login", {
           email: this.mail,
           password: this.password,
         },)
+        // 成功した場合（.then)console.logにresponseを返す
         .then((response) => {
           console.log(response);
         })
+        // 失敗した場合(.catch)console.logにerrorを返す
         .catch((error) => {
           console.log(error);
         });
     },
   },
+//   非同期通信
   actions: {},
 };
 </script>
