@@ -3,6 +3,7 @@ package apifunc
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/dbfunc"
 	"log"
+	"reflect"
 
 	"net/http"
 
@@ -26,14 +27,21 @@ func CoinPost(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
-	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
+	u := c.Get("user").(*jwt.Token)
+	claims := u.Claims.(jwt.MapClaims)
 	uid := claims["uid"]
 	log.Println(uid)
 
-	err := dbfunc.PostCoinInfo(params.Email, params.Total)
+	user, err := dbfunc.PostCoin(params.Email, params.Total)
 	if err != nil { //データベースでエラーが出た時の処理
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
 	}
+
+	log.Println(user.ID, uid, reflect.TypeOf(user.ID), reflect.TypeOf(uid))
+
+	if user.ID != uid { //ユーザーIDが一致しなかった時の処理
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "tokenが正しくありません"})
+	}
+
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "成功しました"}) // フロントに返す値
 }
