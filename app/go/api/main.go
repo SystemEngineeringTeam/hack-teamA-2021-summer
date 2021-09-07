@@ -24,6 +24,7 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 func main() {
 	e := echo.New()
 	e.Validator = &CustomValidator{validator: validator.New()}
+	e.Static("/static/img", "./static/img")
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
@@ -41,6 +42,13 @@ func main() {
 
 	// http://localhost:8080/login : POST apifunc->login.go->LoginPost()
 	e.POST("/login", apifunc.LoginPost)
+
+	// // http://localhost:8080/setting : GET apifunc->setting.go->SettingGet()
+	// e.GET("/setting", apifunc.SettingGet)
+	// // http://localhost:8080/setting : POST apifunc->setting.go->SettingPost()
+	// e.POST("/setting", apifunc.SettingPost)
+
+	e.GET("/images", apifunc.ImageGet)
 
 	// 8080番ポートで待ち受け
 	e.Logger.Fatal(e.Start(":8080"))
