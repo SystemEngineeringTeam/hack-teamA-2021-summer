@@ -2,7 +2,9 @@ package main
 
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/apifunc"
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -28,6 +30,9 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
+	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {
+		fmt.Fprintf(os.Stderr, "Request: %v\n", string(reqBody))
+	}))
 
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
 	e.POST("/coin", apifunc.CoinPost)

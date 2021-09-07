@@ -5,7 +5,7 @@
       <div class="header-list">
         <ul>
           <li>ログイン</li>
-          <li>新規ログイン</li>
+          <router-link to="/singup">singup</router-link>
           <li>ゲーム概要</li>
         </ul>
       </div>
