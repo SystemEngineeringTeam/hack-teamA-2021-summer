@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlotMachine</title>
+    <style>
+        body {
+            background: #bdc3c7;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        main {
+            width: 600px;
+            background: #ecf0f1;
+            padding: 20px;
+            border: 4px solid #fff;
+            border-radius: 12px;
+            ;
+            margin: 16px auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .panel img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 30px;
+        }
+
+        .stop {
+            text-decoration: none;
+      color: rgb(255, 2, 2);
+     
+      width: 80px;
+      height: 80px;
+      line-height: 34px;
+      font-size: 40px;
+      border-radius: 100%;
+      /* text-align: center; */
+      overflow: hidden;
+      font-weight: bold;
+      background-image: linear-gradient(#ff0000 0%, #ff0000 100%);
+      text-shadow: 1px 1px 1px rgba(255, 0, 0, 0.66);
+      box-shadow: inset 0 2px 0 rgba(255, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+      border-bottom: solid 2px #ff0000;
+      user-select: none;
+        }
+
+        .spin {
+            cursor: pointer;
+            width: 280px;
+            height: 36px;
+            background: #3498db;
+            box-shadow: 0 4px 0 #2880b9;
+            border-radius: 18px;
+            line-height: 36px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            user-select: none;
+            margin: 0 auto;
+        }
+
+        .unmatched {
+            opacity: 0.5;
+        }
+
+        .inactive {
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <main>
+            <slot-component ref="component1" v-on:decrement="decrementPanel"></slot-component>
+            <slot-component ref="component2" v-on:decrement="decrementPanel"></slot-component>
+            <slot-component ref="component3" v-on:decrement="decrementPanel"></slot-component>
+        </main>
+        <div class="spin" v-on:click="spin()" v-bind:class={inactive:isRunning}>SPIN</div> 
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+    <script>
+
+        var slotComponent = Vue.extend({
+            data() {
+                return {
+                    //スロットの絵柄
+                    images: [
+            'slot_img/7.jpg',
+            'slot_img/b.jpg',
+            'slot_img/7.jpg',
+        ],
+        image: 'slot_img/7.jpg',
+                    timeoutId: '',
+                    isSelected: true,
+                    isUnmatched: false,
+                }
+            },
+            // 枠組みの中のHTMl制作
+            template: `<section class="panel">
+                        <img v-bind:src= image v-bind:class={inactive:isUnmatched}>
+                        <div class="stop" v-on:click="stop()" 
+                        v-bind:class={inactive:isSelected}>STOP</div>
+                    </section>`,
+            methods: {
+                // ランダムな画像を表示
+                getRandomImage() {
+                    this.image = this.images[Math.floor(Math.random() * this.images.length)];
+                },
+                // 回る時の処理
+                spin() {
+                    // settimeout: 第二引数に与えられた実行タイミング(ミリ秒)で、第一引数に定義された処理内容を1度実行する。
+                    // ここでは第一引数でthis.spin();を定義しているので永遠に並び続ける
+                    this.timeoutId = setTimeout(() => {
+                        this.getRandomImage();
+                        this.spin();
+                    }, 10);
+                },
+                // ストップ時のメゾット
+                stop() {
+                    if (this.isSelected) {
+                        return;
+                    }
+                    // isSelectedがtrueじゃない時
+                    // isSelectedをtrueにして
+                    // spinを止める
+                    this.isSelected = true;
+                    clearTimeout(this.timeoutId);
+                    // emit:子コンポーネントから親コンポーネントに値を渡す
+                    this.$emit('decrement');
+                },
+                activate() {
+                    this.isSelected = false;
+                    this.isUnmatched = false;
+                }
+            },
+        });
+        
+        var vue = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    panelLeft: 3,
+                    isRunning: false,
+                    isNotAllCorrect: true,
+                }
+            },
+            // 'slot-component'：javaでいうimportと同じ
+            components: {
+                'slot-component': slotComponent
+            },
+            methods: {
+                
+                spin() {
+                    if (this.isRunning) {
+                        return;
+                    }
+                    // isRunning　falsenの時isRunningをtrueにして
+                    this.isRunning = true;
+
+                    this.$refs.component1.activate();
+                    this.$refs.component2.activate();
+                    this.$refs.component3.activate();
+
+                    this.$refs.component1.spin();
+                    this.$refs.component2.spin();
+                    this.$refs.component3.spin();
+                },
+
+                decrementPanel: function () {
+                    this.panelLeft--;
+                    if (this.panelLeft == 0) {
+                        this.isRunning = false;
+                        this.panelLeft = 3;
+
+                        if (this.$refs.component1.image !== this.$refs.component2.image && 
+                            this.$refs.component1.image !== this.$refs.component3.image) {
+
+                            this.$refs.component1.isUnmatched = true;
+                        }
+                        if (this.$refs.component2.image !== this.$refs.component1.image && 
+                            this.$refs.component2.image !== this.$refs.component3.image) {
+
+                            this.$refs.component2.isUnmatched = true;
+
+                        }
+                        if (this.$refs.component3.image !== this.$refs.component1.image && 
+                            this.$refs.component3.image !== this.$refs.component2.image) {
+
+                            this.$refs.component3.isUnmatched = true;
+                        }
+                        if (this.$refs.component1.image == this.$refs.component2.image && 
+                            this.$refs.component1.image == this.$refs.component3.image) {
+
+                        }
+                    }
+                },
+
+            }
+        });
+
+    </script>  
+</body>
+</html>

@@ -1,0 +1,188 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>"スロット練習"</title>
+
+  <style>
+    .bottunP {
+      position: relative;
+      top: 80%;
+      left: 26%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width: 10px;
+      float: left;
+    }
+
+    p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width: 900px;
+      height: 600px;
+      border: solid 2px;
+      background-color: #000000;
+      text-align: center;
+      /*一応BOX内の文字も中央寄せ*/
+    }
+
+    .slot {
+      position: relative;
+      top: 35%;
+      left: 30%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      width: 150px;
+      height: 300px;
+      border: solid 2px;
+      background-color: #ffffff;
+      float: left;
+    }
+
+    .slot .leel {
+      width: 50px;
+    }
+
+    .btn-real {
+
+      display: inline-block;
+      text-decoration: none;
+      color: rgb(255, 2, 2);
+      /*アイコン色*/
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      font-size: 40px;
+      border-radius: 50%;
+      text-align: center;
+      overflow: hidden;
+      font-weight: bold;
+      background-image: linear-gradient(#ff0000 0%, #ff0000 100%);
+      text-shadow: 1px 1px 1px rgba(255, 0, 0, 0.66);
+      box-shadow: inset 0 2px 0 rgba(255, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+      border-bottom: solid 2px #ff0000;
+    }
+
+    .btn-real i {
+      line-height: 80px;
+    }
+
+    .btn-real:active {
+      /*押したとき*/
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+      border-bottom: none;
+    }
+  </style>
+</head>
+
+
+<body>
+  <tr>
+    <th class="id">コイン枚数</th>
+
+  </tr>
+  <!-- <div id="app">
+    <p>
+      <slot-component ref="component1" v-on:decrement="decrementPanel"></slot-component>
+      <slot-component ref="component2" v-on:decrement="decrementPanel"></slot-component>
+      <slot-component ref="component3" v-on:decrement="decrementPanel"></slot-component>
+    </p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var slotComponent = Vue.extend({
+      data() {
+        return {
+          images: [
+            'slot_img/7.jpg',
+            'slot_img/b.jpg',
+            'slot_img/7.jpg',
+          ],
+          image: 'slot_img/7.jpg',
+          timeoutId: '',
+          isSelected: true,
+          isUnmatched: false,
+
+        }
+      },
+      template: `<section class="panel">
+              <img v-bind:src= image v-bind:class={inactive:isUnmatched}>
+              <div class="stop" v-on:click="stop()" 
+                                v-bind:class={inactive:isSelected}>STOP</div>
+            </section>`,
+      methods: {
+        getRandomImage() {
+          this.image = this.images[Math.floor(Math.random() * this.images.length)];
+        },
+        spin() {
+          this.timeoutId = setTimeout(() => {
+            this.getRandomImage();
+            this.spin();
+          }, 10);
+        },
+        stop() {
+          if (this.isSelected) {
+            return;
+          }
+          this.isSelected = true;
+          clearTimeout(this.timeoutId);
+          this.$emit('decrement');
+        },
+        activate() {
+          this.isSelected = false;
+          this.isUnmatched = false;
+        }
+      },
+    });
+    var vue = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    panelLeft: 3,
+                    isRunning: false,
+                    isNotAllCorrect: true,
+                }
+            },
+            components: {
+                'slot-component': slotComponent
+            },
+          });
+  </script> -->
+  <div class="p">
+    <div class="bottunP">
+      <a href="#" class="btn-real">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+
+    <div class="slot" id="slot_a">
+      <div class="leel"></div>
+    </div>
+
+    <div class="bottunP">
+      <a href="#" class="btn-real">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+
+    <div class="slot" id="slot_b">
+      <div class="leel"></div>
+    </div>
+
+    <div class="bottunP">
+      <a href="#" class="btn-real">
+        <i class="fa fa-power-off"></i>
+      </a>
+    </div>
+
+    <div class="slot" id="slot_c">
+      <div class="leel"></div>
+    </div>
+  </div> 
+
+</body>
+
+</html>
