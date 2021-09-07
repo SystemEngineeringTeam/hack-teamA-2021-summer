@@ -2,9 +2,11 @@ package apifunc
 
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/dbfunc"
+	"log"
 
 	"net/http"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 )
 
@@ -24,10 +26,10 @@ func CoinPost(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
-	// user := c.Get("user").(*jwt.Token)
-	// claims := user.Claims.(jwt.MapClaims)
-	// name := claims["uid"].(string)
-	// log.Println(name)
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	uid := claims["uid"]
+	log.Println(uid)
 
 	err := dbfunc.PostCoinInfo(params.Email, params.Total)
 	if err != nil { //データベースでエラーが出た時の処理
