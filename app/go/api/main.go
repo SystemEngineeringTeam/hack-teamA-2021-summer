@@ -2,17 +2,32 @@ package main
 
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/apifunc"
+	"net/http"
 
+	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func main() {
+type CustomValidator struct {
+	validator *validator.Validate
+}
 
+func (cv *CustomValidator) Validate(i interface{}) error {
+	if err := cv.validator.Struct(i); err != nil {
+		// Optionally, you could return the error to give each route more control over the status code
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return nil
+}
+
+func main() {
 	e := echo.New()
+	e.Validator = &CustomValidator{validator: validator.New()}
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
 	e.POST("/coin", apifunc.CoinPost)
