@@ -9,8 +9,8 @@ import (
 )
 
 type LoginPostParams struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Email    string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
 }
 
 func LoginPost(c echo.Context) error {
@@ -18,6 +18,11 @@ func LoginPost(c echo.Context) error {
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
+
+	if err := c.Validate(&params); err != nil {
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+	}
+
 	user, err := dbfunc.PostLoginInfo(params.Email, params.Password)
 
 	if err != nil {

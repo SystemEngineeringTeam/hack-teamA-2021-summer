@@ -8,7 +8,7 @@ import (
 )
 
 type UserGetParams struct {
-	Email string `json:"email"`
+	Email string `json:"email" validate:"required"`
 }
 
 // success: return (json){email: (string), name: (string)}
@@ -20,6 +20,10 @@ func UserGet(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}//データが足りないときにエラーを出す
 
+	if err := c.Validate(&params); err != nil {
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+	}
+
 	// 送られてきたデータを元にDBから取得する
 	user, err := dbfunc.GetUserInfo(params.Email)
 	if err != nil {
@@ -30,9 +34,9 @@ func UserGet(c echo.Context) error {
 }
 
 type UserPostParams struct {
-	Email    string `json:"email"`
-	Password string `json:"password"`
-	Name     string `json:"name"`
+	Email    string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
+	Name     string `json:"name" validate:"required"`
 }
 
 // success: return (json){"message": (string)}
@@ -42,6 +46,10 @@ func UserPost(c echo.Context) error {
 	var params UserPostParams
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
+	}
+
+	if err := c.Validate(&params); err != nil {
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	// 送られてきたデータを元にDBに登録する
@@ -59,6 +67,10 @@ func UserPut(c echo.Context) error {
 	var params UserPostParams
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
+	}
+
+	if err := c.Validate(&params); err != nil {
+		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	// 送られてきたデータを元にDBを更新する
