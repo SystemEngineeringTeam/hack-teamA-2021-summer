@@ -2,7 +2,6 @@ package apifunc
 
 import (
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -23,7 +22,6 @@ func ImageGet(c echo.Context) error {
 				return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": err.Error()})
 			}
 			for _, image := range images {
-				log.Println(image.Name())
 				imgPath = append(imgPath, image.Name())
 			}
 			imgPaths = append(imgPaths, imgPath)
