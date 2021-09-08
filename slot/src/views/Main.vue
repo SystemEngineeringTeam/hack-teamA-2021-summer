@@ -1,7 +1,7 @@
 <template>
     <div id="app">
       <main>
-        <dis>
+        <div class = 'dis'>
           <slot-component
             ref="component1"
             v-on:decrement="decrementPanel"
@@ -14,14 +14,20 @@
             ref="component3"
             v-on:decrement="decrementPanel"
           ></slot-component>
-        </dis>
-        <div
+        </div>
+          
+        <sub>
+           コイン枚数
+           {{this.coin}}
+           <div
           class="spin"
           v-on:click="spin()"
           v-bind:class="{inactive:isRunning}"
         >
           MAX
         </div>
+        </sub>
+           
       </main>
     </div>
 </template>
@@ -33,7 +39,16 @@
             font-weight: bold;
             font-family: Arial, Helvetica, sans-serif;
         }
-        dis{
+        sub{
+            fontsize: 20px;
+            color: #ffffff;
+            width: 100px;
+            height: 50px;
+            padding: 20px;
+            border-radius: 12px;
+            
+        }
+        .dis{
             width: 700px;
             height: 250px;
             background: #dab300;
@@ -57,16 +72,11 @@
             justify-content: space-between;
         }
 
-        .panel img {
-            width: 200px;
-            height: 200px;
-            margin-top: 20px;
-            margin-bottom: 70px;
-        }
+        
 
-input {
-  display: none; /* デフォルトのボタンを非表示にする */
-}
+    input {
+        display: none; /* デフォルトのボタンを非表示にする */
+    }
 
 .spin {
     width: 100px;
@@ -79,7 +89,7 @@ input {
     font-size: 20px;
     color: rgb(255, 255, 255);
     user-select: none;
-    margin-top: 300px;
+    margin-top: 200px;
   color: #fff;        /* 文字色を白に指定 */ 
   background: rgb(2, 133, 255);   /* 背景色をオレンジに指定 */
   animation: flash 1s infinite; /* アニメーションflashを1秒ごとに繰り返す */
@@ -95,21 +105,6 @@ input {
     box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffc, 0 0 40px #ff9;
   }
 }
-        /* .spin {
-            cursor: pointer;
-            width: 100px;
-            height: 50px;
-            
-            background: #003cff;
-            box-shadow: 0 4px 0 #2880b9;
-            border-radius: 18px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 14px;
-            color: rgb(255, 255, 255);
-            user-select: none;
-            margin-top: 300px;
-        } */
 
         .unmatched {
             opacity: 0.5;
@@ -129,6 +124,7 @@ import slotComponent from '@/components/slotCmp.vue'
                     panelLeft: 3,
                     isRunning: false,
                     isNotAllCorrect: true,
+                    coin: 100,
                 }
             },
             // 'slot-component'：javaでいうimportと同じ
@@ -142,7 +138,7 @@ import slotComponent from '@/components/slotCmp.vue'
                     }
                     //isRunningfalsenの時isRunningをtrueにして
                     this.isRunning = true;
-
+                    this.coin -= 3;
                     this.$refs.component1.activate();
                     this.$refs.component2.activate();
                     this.$refs.component3.activate();
@@ -176,11 +172,20 @@ import slotComponent from '@/components/slotCmp.vue'
                         }
                         if (this.$refs.component1.image == this.$refs.component2.image && 
                             this.$refs.component1.image == this.$refs.component3.image) {
-
                         }
+
+                        // if(this.$refs.component1.image == this.$refs.component2.image == this.$refs.component3.image){
+                        //     for(let i = 0; i < this.data.image.length; i++){
+                        //         if(i == 1){
+                        //             this.coin += 300;
+                        //         }
+                        //         else if(i == 2){
+                        //             this.coin += 150;
+                        //         }
+                        //     }
+                        // }
                     }
                 },
-
             }
         };
 </script>

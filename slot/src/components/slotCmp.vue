@@ -22,7 +22,7 @@ export default {
         require("@/assets/c.jpg"),
         require("@/assets/r.jpg"),
       ],
-      image:  require("@/assets/7.jpg"),
+      image: require("@/assets/7.jpg"),
       timeoutId: "",
       isSelected: true,
       isUnmatched: false,
@@ -39,14 +39,41 @@ export default {
     getRandomImage() {
       this.image = this.images[Math.floor(Math.random() * this.images.length)];
     },
+    getImage() {
+        if(this.image == this.images[0]){
+            this.image = this.images[1];
+        }
+        else if(this.image == this.images[1]){
+            this.image = this.images[2];
+        }
+        else if(this.image == this.images[2]){
+            this.image = this.images[3];
+        }
+        else if(this.image == this.images[3]){
+            this.image = this.images[0];
+        }
+        // for(let i = 0; i < this.images.length; i ++){
+        //     if(i < this.images.length - 1){
+        //         if(this.image == this.images[i]){
+        //             this.image = this.images[i+1];
+        //         }
+        //     }
+        //     else {
+        //         if(i == this.images.length){
+        //             this.image = this.images[0];
+        //         }
+        //     }
+        // }
+    },
     // 回る時の処理
     spin() {
       // settimeout: 第二引数に与えられた実行タイミング(ミリ秒)で、第一引数に定義された処理内容を1度実行する。
       // ここでは第一引数でthis.spin();を定義しているので永遠に並び続ける
       this.timeoutId = setTimeout(() => {
-        this.getRandomImage();
+        // this.getRandomImage();
+        this.getImage();
         this.spin();
-      }, 10);
+      }, 50);
     },
     // ストップ時のメゾット
     stop() {
