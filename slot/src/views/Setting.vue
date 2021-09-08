@@ -42,13 +42,16 @@ export default {
     PostSetting() {
       var selected = [];
       this.itemsList.forEach(element => {
-        var select = element.item.filter(item => item.selected);
-        selected.push(select[0].src);
+        var select = element.item.filter(item => item.selected)[0].src;
+        select = select.replace("http://localhost:8080/static/img/", "").replace("/", "");
+        select = select.replace(/set\d/, "");
+        selected.push(select);
       });
       // var selected = this.itemsList.filter(item => item.selected);
-      console.log(selected);
-      this.axios.post('/setting', {
-        selected: selected
+      console.log(selected.join(':'));
+      this.axios.post('http://localhost:8080/setting', {
+        path: selected.join(':'),
+        email: "test@test" //emailに置き換えてください
       }
       ).then(function (response) {
         console.log(response);
