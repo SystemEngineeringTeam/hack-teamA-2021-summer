@@ -1,6 +1,7 @@
 <template>
   <section class="panel">
-    <img v-bind:src="image" v-bind:class="{ inactive: isUnmatched }" />
+      <!-- trueだったら半透明にする -->
+    <img v-bind:src="images[image]" v-bind:class="{ inactive: isUnmatched }" />
     <div
       class="stop"
       v-on:click="stop()"
@@ -22,49 +23,37 @@ export default {
         require("@/assets/c.jpg"),
         require("@/assets/r.jpg"),
       ],
-      image: require("@/assets/7.jpg"),
+    //   image: Math.floor(Math.random() * this.images.length),
+      image: 0,
       timeoutId: "",
       isSelected: true,
       isUnmatched: false,
+      
     };
   },
-  // 枠組みの中のHTMl制作
-  template: `<section class="panel">
-                        <img v-bind:src= image v-bind:class={inactive:isUnmatched}>
-                        <div class="stop" v-on:click="stop()" 
-                        v-bind:class={inactive:isSelected}>STOP</div>
-                    </section>`,
   methods: {
     // ランダムな画像を表示
-    getRandomImage() {
-      this.image = this.images[Math.floor(Math.random() * this.images.length)];
-    },
+    // getRandomImage() {
+    //   this.image = this.images[Math.floor(Math.random() * this.images.length)];
+    // },
     getImage() {
-        if(this.image == this.images[0]){
-            this.image = this.images[1];
-        }
-        else if(this.image == this.images[1]){
-            this.image = this.images[2];
-        }
-        else if(this.image == this.images[2]){
-            this.image = this.images[3];
-        }
-        else if(this.image == this.images[3]){
-            this.image = this.images[0];
-        }
-        // for(let i = 0; i < this.images.length; i ++){
-        //     if(i < this.images.length - 1){
-        //         if(this.image == this.images[i]){
-        //             this.image = this.images[i+1];
-        //         }
-        //     }
-        //     else {
-        //         if(i == this.images.length){
-        //             this.image = this.images[0];
-        //         }
-        //     }
-        // }
+        this.image = (this.image + 1) % this.images.length
+        // this.image = 3;
     },
+   
+    //     for(let i = 0; i < this.imageslength; i ++){
+    //         if(i < this.images.length - 1){
+    //             if(this.image == this.images[i]){
+    //                 this.image = this.images[i+1];
+    //             }
+    //         }
+    //         else {
+    //             if(i == this.images.length){
+    //                 this.image = this.images[0];
+    //             }
+    //         }
+    //     }
+    // },
     // 回る時の処理
     spin() {
       // settimeout: 第二引数に与えられた実行タイミング(ミリ秒)で、第一引数に定義された処理内容を1度実行する。
@@ -73,7 +62,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 50);
+      }, 1000); 
     },
     // ストップ時のメゾット
     stop() {
@@ -122,4 +111,11 @@ export default {
   margin-top: 20px;
   margin-bottom: 70px;
 }
+
+.unmatched {
+            opacity: 0.5;
+        }
+.inactive {
+    opacity: 0.5;
+        }
 </style>

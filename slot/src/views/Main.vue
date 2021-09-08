@@ -2,6 +2,7 @@
     <div id="app">
       <main>
         <div class = 'dis'>
+            <!-- v-on押したら実行される  -->
           <slot-component
             ref="component1"
             v-on:decrement="decrementPanel"
@@ -16,22 +17,28 @@
           ></slot-component>
         </div>
           
-        <sub>
+        <div class = 'sub'>
            コイン枚数
+           {{this.coment}}
            {{this.coin}}
+           <a href="#" class="btn-sf-like" 
+           v-on:click="reset()"
+           v-bind:class="{inactive:isRunning}">
+           コイン
+           リセット
+            </a>
            <div
           class="spin"
           v-on:click="spin()"
           v-bind:class="{inactive:isRunning}"
-        >
-          MAX
+          >
+            MAX
+          </div>
         </div>
-        </sub>
            
       </main>
     </div>
 </template>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
 <style scoped>
         body {
             background: #bdc3c7;
@@ -39,7 +46,7 @@
             font-weight: bold;
             font-family: Arial, Helvetica, sans-serif;
         }
-        sub{
+        .sub{
             fontsize: 20px;
             color: #ffffff;
             width: 100px;
@@ -58,6 +65,25 @@
             margin: 16px auto;
             display: flex;
             justify-content: space-between;
+        }
+        .btn-sf-like {
+            position: relative;
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: none;
+            color: #FFF;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.73);
+            padding: 0.3em 0.5em;
+            background: #00bcd4;
+            border-top: solid 3px #00a3d4;
+            border-bottom: solid 3px #00a3d4;
+            transition: .4s;
+            font-size: 20px;
+}
+
+        .btn-sf-like:hover {
+        text-shadow: -6px 0px 15px rgba(255, 255, 240, 0.83),
+                    6px 0px 15px rgba(255, 255, 240, 0.83);
         }
         main {
             width: 900px;
@@ -106,13 +132,7 @@
   }
 }
 
-        .unmatched {
-            opacity: 0.5;
-        }
-
-        .inactive {
-            opacity: 0.5;
-        }
+        
 
     </style>
 <script>
@@ -124,7 +144,9 @@ import slotComponent from '@/components/slotCmp.vue'
                     panelLeft: 3,
                     isRunning: false,
                     isNotAllCorrect: true,
+                    isR:true,
                     coin: 100,
+                    coment: "",
                 }
             },
             // 'slot-component'：javaでいうimportと同じ
@@ -132,13 +154,20 @@ import slotComponent from '@/components/slotCmp.vue'
                 'slot-component': slotComponent
             },
             methods: {
+
+                // 押したときに実行、
                 spin() {
                     if (this.isRunning) {
                         return;
                     }
-                    //isRunningfalsenの時isRunningをtrueにして
+                    //isRunningfalseの時isRunningをtrueにして回転させる
                     this.isRunning = true;
-                    this.coin -= 3;
+                    if(this.isR){
+                        this.coin -= 3;
+                    }
+                    this.isR = true;
+                    
+        
                     this.$refs.component1.activate();
                     this.$refs.component2.activate();
                     this.$refs.component3.activate();
@@ -146,8 +175,16 @@ import slotComponent from '@/components/slotCmp.vue'
                     this.$refs.component1.spin();
                     this.$refs.component2.spin();
                     this.$refs.component3.spin();
-                },
 
+                    
+                },
+                reset(){
+                    if(this.isRunning){
+                        return;
+                    }
+                    this.coin = 100;
+                },
+                // 実行されたらpanelLeftが１ずつマイナスされていく。panelLeftが０になるとthis.isRunning = falseにし、回転を止める
                 decrementPanel: function () {
                     this.panelLeft--;
                     if (this.panelLeft == 0) {
@@ -171,9 +208,36 @@ import slotComponent from '@/components/slotCmp.vue'
                             this.$refs.component3.isUnmatched = true;
                         }
                         if (this.$refs.component1.image == this.$refs.component2.image && 
-                            this.$refs.component1.image == this.$refs.component3.image) {
-                        }
+                            this.$refs.component1.image == this.$refs.component3.image && 
+                            this.$refs.component2.image == this.$refs.component3.image) {
+                                switch(this.$refs.component1.image){
+                                    case 0:
+                                        // <p>+300</p>
+                                        this.coment = "+300";
+                                        this.coin += 300;
+                                        break;
+                                    
+                                    case 1:
+                                        this.coment = "+200";
+                                        this.coin += 200;
+                                        break;
 
+                                    case 2:
+                                        // <p>+100</p>
+                                        this.coment = "+100";
+                                        this.coin += 100;
+                                        break;
+
+                                    case 3:
+                                        this.coment = "もう１度";
+                                        this.isR = false;
+                                        break;
+                                        
+                                }
+
+                            }
+                        
+                         
                         // if(this.$refs.component1.image == this.$refs.component2.image == this.$refs.component3.image){
                         //     for(let i = 0; i < this.data.image.length; i++){
                         //         if(i == 1){
