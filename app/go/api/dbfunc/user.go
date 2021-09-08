@@ -15,7 +15,6 @@ func GetUserInfo(email string) (user models.User, err error) {
 	var u models.User
 	err = db.Where("email = ?", email).First(&u).Error //e-mailを元にユーザー情報を取得
 
-	defer db.Close()
 	return u, err //接続できなかったり、データがないときはエラーを出す
 }
 
