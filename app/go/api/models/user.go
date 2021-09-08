@@ -9,4 +9,5 @@ type User struct {
 	Password   string `json:"password"`
 	Name       string `json:"name"`
 	Coin       int    `json:"coin"`
+	UUID       string `json:"uid"`
 }

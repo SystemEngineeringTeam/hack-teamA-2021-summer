@@ -56,6 +56,11 @@ func main() {
 	// http://localhost:8080/images : GET apifunc->images.go->imagesGet()
 	e.GET("/images", apifunc.ImageGet)
 
+	// ChartData : GET apifunc->ChartData.go->ChartDataGet()
+	e.GET("/chartdata", apifunc.ChartDataGet)
+	// http://localhost:8080/chartdata : POST apifunc->ChartData.go->ChartDataPost()
+	e.POST("/chartdata", apifunc.ChartDataPost)
+
 	// 8080番ポートで待ち受け
 	e.Logger.Fatal(e.Start(":8080"))
 }

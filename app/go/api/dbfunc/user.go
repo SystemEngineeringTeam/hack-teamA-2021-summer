@@ -4,6 +4,7 @@ import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 	"errors"
 
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt" //パスワードをハッシュ化するために使用
 )
 
@@ -35,8 +36,13 @@ func PostUser(email string, password string, name string) (err error) {
 	}
 	hashStr := string(hash)
 
+	uid, err := uuid.NewRandom()
+	if err != nil {
+		return err
+	}
+
 	// データベースに登録
-	var u models.User = models.User{Email: email, Password: hashStr, Name: name, Coin: 100}
+	var u models.User = models.User{Email: email, Password: hashStr, Name: name, Coin: 100, UUID: uid.String()}
 	err = db.Create(&u).Error
 
 	return err
