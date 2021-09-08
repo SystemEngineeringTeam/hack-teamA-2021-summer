@@ -1,32 +1,11 @@
-<template>
-    <div id="app">
-      <main>
-        <dis>
-          <slot-component
-            ref="component1"
-            v-on:decrement="decrementPanel"
-          ></slot-component>
-          <slot-component
-            ref="component2"
-            v-on:decrement="decrementPanel"
-          ></slot-component>
-          <slot-component
-            ref="component3"
-            v-on:decrement="decrementPanel"
-          ></slot-component>
-        </dis>
-        <div
-          class="spin"
-          v-on:click="spin()"
-          v-bind:class="{inactive:isRunning}"
-        >
-          MAX
-        </div>
-      </main>
-    </div>
-</template>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
-<style scoped>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SlotMachine</title>
+    <style>
         body {
             background: #bdc3c7;
             font-size: 16px;
@@ -64,6 +43,53 @@
             margin-bottom: 70px;
         }
 
+        .stop {
+      text-decoration: none;
+      color: #ffffff;
+     
+      width: 80px;
+      height: 80px;
+      margin-left: 55px;
+      line-height: 34px;
+      font-size: 40px;
+      border-radius: 100%;
+      text-align: center;
+      overflow: hidden;
+      font-weight: bold;
+      background-image: linear-gradient(#ffffff 0%, #ffffff 100%);
+      text-shadow: 1px 1px 1px #dab300(255, 0, 0, 0.66);
+      box-shadow: inset 0 2px 0 #dab300(255, 0, 0, 0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+      border-bottom: solid 2px #dab300;
+      user-select: none;
+            /* cursor: pointer;
+            width: 90px;
+            height: 32px;
+            background: #ef454a;
+            box-shadow: 0 4px 0 #d1483e;
+            border-radius: 16px;
+            line-height: 32px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            user-select: none; */
+        }
+
+/* .spin {
+    width: 100px;
+    height: 50px;
+    background: #008cff;
+    box-shadow: 0 4px 0 #2880b9;
+    border-radius: 18px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    user-select: none;
+    margin-top: 300px;
+    color: #FFF;       
+    font-family: Beon;
+    animation: flash 1s infinite;
+} */
 input {
   display: none; /* デフォルトのボタンを非表示にする */
 }
@@ -120,10 +146,84 @@ input {
         }
 
     </style>
-<script>
-import slotComponent from '@/components/slotCmp.vue'
-    export default {
-            // el: '#app',
+</head>
+
+<body>
+    
+    <div id="app">
+        <main>
+            <dis>
+            <slot-component ref="component1" v-on:decrement="decrementPanel"></slot-component>
+            <slot-component ref="component2" v-on:decrement="decrementPanel"></slot-component>
+            <slot-component ref="component3" v-on:decrement="decrementPanel"></slot-component>
+        </dis>
+        <div class="spin" v-on:click="spin()" v-bind:class={inactive:isRunning}>MAX</div> 
+        </main>
+
+        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> 
+    <script>
+
+        var slotComponent = Vue.extend({
+            data() {
+                return {
+                    //スロットの絵柄
+                    images: [
+            'slot_img/7.jpg',
+            'slot_img/b.jpg',
+            'slot_img/c.jpg',
+            'slot_img/r.jpg',
+        ],
+        image: 'slot_img/7.jpg',
+                    timeoutId: '',
+                    isSelected: true,
+                    isUnmatched: false,
+                }
+            },
+            // 枠組みの中のHTMl制作
+            template: `<section class="panel">
+                        <img v-bind:src= image v-bind:class={inactive:isUnmatched}>
+                        <div class="stop" v-on:click="stop()" 
+                        v-bind:class={inactive:isSelected}>STOP</div>
+                    </section>`,
+            methods: {
+                // ランダムな画像を表示
+                getRandomImage() {
+                    this.image = this.images[Math.floor(Math.random() * this.images.length)];
+                },
+                // 回る時の処理
+                spin() {
+                    // settimeout: 第二引数に与えられた実行タイミング(ミリ秒)で、第一引数に定義された処理内容を1度実行する。
+                    // ここでは第一引数でthis.spin();を定義しているので永遠に並び続ける
+                    this.timeoutId = setTimeout(() => {
+                        this.getRandomImage();
+                        this.spin();
+                    }, 10);
+                },
+                // ストップ時のメゾット
+                stop() {
+                    if (this.isSelected) {
+                        return;
+                    }
+                    // isSelectedがtrueじゃない時
+                    // isSelectedをtrueにして
+                    // spinを止める
+                    this.isSelected = true;
+                    clearTimeout(this.timeoutId);
+                    // emit:子コンポーネントから親コンポーネントに値を渡す
+                    this.$emit('decrement');
+                },
+                activate() {
+                    this.isSelected = false;
+                    this.isUnmatched = false;
+                }
+            },
+        });
+        
+        var vue = new Vue({
+            el: '#app',
             data() {
                 return {
                     panelLeft: 3,
@@ -136,11 +236,12 @@ import slotComponent from '@/components/slotCmp.vue'
                 'slot-component': slotComponent
             },
             methods: {
+                
                 spin() {
                     if (this.isRunning) {
                         return;
                     }
-                    //isRunningfalsenの時isRunningをtrueにして
+                    // isRunning　falsenの時isRunningをtrueにして
                     this.isRunning = true;
 
                     this.$refs.component1.activate();
@@ -182,5 +283,8 @@ import slotComponent from '@/components/slotCmp.vue'
                 },
 
             }
-        };
-</script>
+        });
+
+    </script>  
+</body>
+</html>
