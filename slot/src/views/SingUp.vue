@@ -21,7 +21,7 @@
                 <input v-model="password"/>
                 
             </div>
-            <img class="loanshark" src="https://4.bp.blogspot.com/-VA_IOO7AQy4/VeJ-lBs7uwI/AAAAAAAAxH8/36QFYd58nRk/s800/money_yami_soshiki.png">
+            <img class="bill" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
         </div>
 
         <button @click="singup()">登録</button>
@@ -67,6 +67,7 @@ export default {
 body {
     font-family: "Avenir Next";
     background-color: #000000;
+    background-image:url("https://www.pakutaso.com/shared/img/thumb/PAK86_hikaritobu420150318210141_TP_V.jpg")
 }
 
 li {
@@ -75,15 +76,19 @@ li {
 
 /*headerの設定、背景の色*/
 .header {
-    background-color: #b22222;    color: #4b0082;
+    background-color: #b22222;    color: #33FF33;
     height: 300px;
+    background-image:url("https://chicodeza.com/wordpress/wp-content/uploads/okane-illust6.png")
 }
 
 /*heder、チーム名とかロゴ的な何かの大きさ、位置*/
 .header-logo {
     float: left;
-    font-size: 145px;
+    font-size: 120px;
     padding: 20px 40px;
+    position:relative;
+    top: 40px;
+    left: 10px;
 }
 
 /*headerおわり*/
@@ -94,35 +99,37 @@ li {
 
 .copy-container h1 {
     font-size: 100px;
-    color: #800000;
+    color: #DD0000;
     position:relative;
     left: 10px;
 }
 
 .name {
     color: #fff;
+    font-size: 30px;
     position:relative;
-    left: 30px;
-    bottom: 40px;
+    left: 0px;
+    bottom: 10px;
 }
 .mail {
     color: #fff;
     position:relative;
-    left: 80px;
-    bottom: 40px;
+    left: 40px;
+    bottom: 10px;
 }
 .pass {
     color: #fff;
     position:relative;
-    left: 50px;
-    bottom: 40px;
+    left: 20px;
+    bottom: 10px;
 }
 
 /*メールアドレスを打ち込むところ*/
 input{
     border: 4px solid #000;
     width: 400px;
-    height: 30px;
+    height: 50px;
+    font-size: 30px;
     background-color: #4b0082;
     color: #fff;
     position:relative;
@@ -135,6 +142,12 @@ input{
     position:relative;
     left: 95px;
     top: 50px;
+}
+.bill{
+    width: 300px;
+    height: 300px;
+    position:relative;
+    bottom: 100px;
 }
 
 button{
