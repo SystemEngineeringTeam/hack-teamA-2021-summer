@@ -21,16 +21,22 @@
     <div class="copy-container">
       <v-btn @click="PostSetting">保存</v-btn>
     </div>
+    <chart user="test@test"></chart>
   </div>
 </template>
 
 <script>
+import Chart from '@/components/Chart.vue';
+// import Chart from '../components/chart.vue';
 export default {
   data: () => {
     return {
       selected: 'selected',
       itemsList: []
     };
+  },
+  components: {
+    Chart
   },
   methods: {
     ImageSelect(items, item) {
@@ -73,8 +79,8 @@ export default {
       this.itemsList.push({name: index, item: item});
       item = [];
     });
-    // console.log(this.itemsList);
-    // console.log(data);
+    console.log(this.itemsList);
+    console.log(data);
   },
 };
 </script>
