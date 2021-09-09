@@ -21,9 +21,7 @@
         </div>
         <input class="pwd" v-model="password" />
         <div class="check">
-          <v-btn @click="login()">
-            <a href="/main"> ログイン</a>
-          </v-btn>
+          <button @click="login()">ログイン</button>
         </div>
       </div>
 
@@ -60,15 +58,12 @@ export default {
         });
         this.$cookie.set("token", res.data.token);
         console.log(res);
-        this.$router.push("/main")
-
+        this.$router.push("/main");
       } catch (e) {
         console.log(e);
         alert("ログインに失敗しました");
-        
       }
     },
-    
   },
 };
 </script>
