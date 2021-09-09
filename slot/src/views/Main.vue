@@ -39,7 +39,10 @@
         </div>
       </div>
     </main>
-    <!-- <a href="#" class="btn-sf-like2" @click="total()">セーブ</a> -->
+    <v-btn>
+      <router-link to="/setting">絵柄変更</router-link>
+    </v-btn>
+    <chart></chart>
   </div>
 </template>
 <style scoped>
@@ -158,6 +161,8 @@ input {
 </style>
 <script>
 import slotComponent from "@/components/slotCmp.vue";
+import Chart from '../components/Chart.vue';
+// import App from "@/views/App.vue";
 export default {
   // el: '#app',
   data() {
@@ -168,11 +173,13 @@ export default {
       isR: true,
       coin: 100,
       coment: "",
+      spinCnt: 0,
     };
   },
   // 'slot-component'：javaでいうimportと同じ
   components: {
     "slot-component": slotComponent,
+    "Chart": Chart,
   },
 
   async created() {
@@ -183,12 +190,30 @@ export default {
             },
         });
     var coin = res.data.coin;
+    var spin = res.data.spin;
     this.coin = coin;
+    this.spinCnt = spin;
     }catch(e){
         console.log(e);
     }
   },
   methods: {
+    sendChart(){
+      try{
+        var res = res = await this.axios.post("http://localhost:8080//chartdata",
+        {
+          "spin": this.spinCnt,
+          "coin": this.coin
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + this.$cookie.get("token"),
+          },
+        })
+      }catch(e){
+        console.log(e)
+      }
+    },
     total() {
       this.axios
         //   今回はポストに接続するので.postにする。第一引数に宛先を指定、第二引数に送りたいデータを指定する
@@ -244,7 +269,7 @@ export default {
       if (this.panelLeft == 0) {
         this.isRunning = false;
         this.panelLeft = 3;
-        
+
         if (
           this.$refs.component1.image !== this.$refs.component2.image &&
           this.$refs.component1.image !== this.$refs.component3.image
@@ -274,7 +299,7 @@ export default {
               // this.coment = "+300";
               this.coin += 300;
               break;
-            
+
             case 1:
               // this.coment = "+200";
               this.coin += 200;
@@ -294,6 +319,7 @@ export default {
           }
         }
         this.total();
+        this.sendChart();
       }
     },
   },
