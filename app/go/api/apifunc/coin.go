@@ -28,5 +28,5 @@ func CoinPost(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "成功しました"}) // フロントに返す値
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"}) // フロントに返す値
 }

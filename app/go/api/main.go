@@ -43,16 +43,13 @@ func main() {
 		SigningKey: []byte("secret"),
 	}))
 
-	// requiredAuth
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
 	requiredAuth.POST("/coin", apifunc.CoinPost)
 
-	// requiredAuth
 	// http://localhost:8080/user : GET apifunc->user.go->UserGet()
 	requiredAuth.GET("/user", apifunc.UserGet)
 	// http://localhost:8080/user : POST apifunc->user.go->UserPost()
 	e.POST("/user", apifunc.UserPost)
-	// requiredAuth
 	// http://localhost:8080/user : PUT apifunc->user.go->UserPut()
 	requiredAuth.PUT("/user", apifunc.UserPut)
 

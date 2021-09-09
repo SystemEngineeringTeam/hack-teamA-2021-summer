@@ -27,7 +27,7 @@ func SettingPost(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "DBエラー: " + err.Error()})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "OK"})
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
 }
 
 func SettingGet(c echo.Context) error {
@@ -35,5 +35,5 @@ func SettingGet(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "DBエラー: " + err.Error()})
 	}
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "OK", "setting": s.Path})
+	return c.JSON(http.StatusOK, map[string]interface{}{"setting": s.Path})
 }

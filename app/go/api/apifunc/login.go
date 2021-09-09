@@ -45,5 +45,5 @@ func LoginPost(c echo.Context) error {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "成功しました", "token": t}) // フロントに返す値
+	return c.JSON(http.StatusOK, map[string]interface{}{"token": t}) // フロントに返す値
 }
