@@ -1,6 +1,6 @@
 <template>
   <section class="panel">
-      <!-- trueだったら半透明にする -->
+    <!-- trueだったら半透明にする -->
     <img v-bind:src="images[image]" v-bind:class="{ inactive: isUnmatched }" />
     <div
       class="stop"
@@ -25,29 +25,30 @@ export default {
         require("@/assets/c.jpg"),
         require("@/assets/r.jpg"),
       ],
-    //   image: Math.floor(Math.random() * this.images.length),
+      //   image: Math.floor(Math.random() * this.images.length),
       image: 0,
       timeoutId: "",
       isSelected: true,
       isUnmatched: false,
-      
     };
   },
-  async created(){
-      try{
-        var res = await this.axios.get("http://localhost:8080/setting",{
-            headers: {
-              Authorization: "Bearer " + this.$cookie.get("token"),
-            },
-        });
-        console.log(res)
-        var images = res.data.setting.split(":");
-        for(let i = 0; i < images.length; i++){
-            images[i] = 'http://localhost:8080/static/img/set' + (i + 1) + "/" + images[i];
-        }
-       this.images = images;
-    }catch(e){
-        console.log(e);
+  async created() {
+    try {
+      var res = await this.axios.get("http://localhost:8080/setting", {
+        headers: {
+          Authorization: "Bearer " + this.$cookie.get("token"),
+        },
+      });
+      console.log(res);
+      var images = res.data.setting.split(":");
+      for (let i = 0; i < images.length; i++) {
+        images[i] =
+          "http://localhost:8080/static/img/set" + (i + 1) + "/" + images[i];
+      }
+      images.push(images[2], images[3]);
+      this.images = images;
+    } catch (e) {
+      console.log(e);
     }
   },
   methods: {
@@ -56,10 +57,10 @@ export default {
     //   this.image = this.images[Math.floor(Math.random() * this.images.length)];
     // },
     getImage() {
-        this.image = (this.image + 1) % this.images.length
-        // this.image = 3;
+      this.image = (this.image + 1) % this.images.length;
+      // this.image = 3;
     },
-   
+
     //     for(let i = 0; i < this.imageslength; i ++){
     //         if(i < this.images.length - 1){
     //             if(this.image == this.images[i]){
@@ -81,7 +82,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 80); 
+      }, 2000);
     },
     // ストップ時のメゾット
     stop() {
@@ -132,9 +133,9 @@ export default {
 }
 
 .unmatched {
-            opacity: 0.5;
-        }
+  opacity: 0.5;
+}
 .inactive {
-    opacity: 0.5;
-        }
+  opacity: 0.5;
+}
 </style>
