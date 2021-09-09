@@ -33,16 +33,16 @@ func ChartDataPost(c echo.Context) error {
 	// 送られてきたJSONを確かめる
 	var params ChartDataPostParams
 	if err := c.Bind(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	// 送られてきたデータを元にDBに登録する
 	if err := dbfunc.PostChartData(c, params.Spin, params.Coin); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "データベースへの登録に失敗しました:" + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースへの登録に失敗しました:" + err.Error()})
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
