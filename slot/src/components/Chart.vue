@@ -20,16 +20,20 @@ export default {
     }
   }),
   async mounted (){
-    var data = await this.axios.get('http://localhost:8080/chartdata', {
-      headers: {
-        Authorization: 'Bearer ' + this.$cookie.get("token")
-      },
-    });
-    data.data.data.forEach(element => {
-      this.chartdata.labels.push(element.spin);
-      this.chartdata.datasets[0].data.push(element.coin);
-    });
-    this.renderChart(this.chartdata, this.options);
+    try {
+      var data = await this.axios.get('http://localhost:8080/chartdata', {
+        headers: {
+          Authorization: 'Bearer ' + this.$cookie.get("token")
+        },
+      });    
+      data.data.data.forEach(element => {
+        this.chartdata.labels.push(element.spin);
+        this.chartdata.datasets[0].data.push(element.coin);
+      });
+      this.renderChart(this.chartdata, this.options);
+    } catch (error) {
+      console.log(error);
+    }
   },
 }
 </script>
