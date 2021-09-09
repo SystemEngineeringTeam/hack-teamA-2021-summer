@@ -22,6 +22,8 @@ export default {
         require("@/assets/B.jpg"),
         require("@/assets/c.jpg"),
         require("@/assets/r.jpg"),
+        require("@/assets/c.jpg"),
+        require("@/assets/r.jpg"),
       ],
     //   image: Math.floor(Math.random() * this.images.length),
       image: 0,
@@ -30,6 +32,23 @@ export default {
       isUnmatched: false,
       
     };
+  },
+  async created(){
+      try{
+        var res = await this.axios.get("http://localhost:8080/setting",{
+            headers: {
+              Authorization: "Bearer " + this.$cookie.get("token"),
+            },
+        });
+        console.log(res)
+        var images = res.data.setting.split(":");
+        for(let i = 0; i < images.length; i++){
+            images[i] = 'http://localhost:8080/static/img/set' + (i + 1) + "/" + images[i];
+        }
+       this.images = images;
+    }catch(e){
+        console.log(e);
+    }
   },
   methods: {
     // ランダムな画像を表示
