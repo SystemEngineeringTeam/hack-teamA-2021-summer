@@ -14,14 +14,15 @@
             
             <div class="contents-item">
                 <p class="name">お名前</p>
-                <input v-model="name"/>
+                <input class="names" v-model="name"/>
                 <p class="mail">メールアドレス</p>
-                <input v-model="mail"/>
+                <input class="mails" v-model="mail"/>
                 <p class="pass">パスワード</p>
-                <input v-model="password"/>
+                <input class="pases" v-model="password"/>
                 
             </div>
             <img class="bill" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
+            <img class="bills" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
         </div>
 
         <button @click="singup()">登録</button>
@@ -65,9 +66,12 @@ export default {
 
 <style scoped>
 body {
+    position: relative;
+    padding:0;
     font-family: "Avenir Next";
     background-color: #000000;
     background-image:url("https://www.pakutaso.com/shared/img/thumb/PAK86_hikaritobu420150318210141_TP_V.jpg")
+    
 }
 
 li {
@@ -76,6 +80,8 @@ li {
 
 /*headerの設定、背景の色*/
 .header {
+    position: relative;
+    padding:0;
     background-color: #b22222;    color: #33FF33;
     height: 300px;
     background-image:url("https://chicodeza.com/wordpress/wp-content/uploads/okane-illust6.png")
@@ -86,9 +92,9 @@ li {
     float: left;
     font-size: 120px;
     padding: 20px 40px;
-    position:relative;
-    top: 40px;
-    left: 10px;
+    position:absolute;
+    top: 0;
+    left: 0;
 }
 
 /*headerおわり*/
@@ -100,54 +106,80 @@ li {
 .copy-container h1 {
     font-size: 100px;
     color: #DD0000;
-    position:relative;
+    position: absolute;
+    top: 220px;
     left: 10px;
 }
 
 .name {
     color: #fff;
     font-size: 30px;
-    position:relative;
-    left: 0px;
-    bottom: 10px;
+    position:absolute;
+    top: 500px;
+    left: 80px;
 }
 .mail {
     color: #fff;
-    position:relative;
-    left: 40px;
-    bottom: 10px;
+    position:absolute;
+    top: 600px;
+    left: 80px;
 }
 .pass {
     color: #fff;
-    position:relative;
-    left: 20px;
-    bottom: 10px;
+    position:absolute;
+    top: 700px;
+    left: 80px;
 }
 
-/*メールアドレスを打ち込むところ*/
-input{
+.names{
     border: 4px solid #000;
     width: 400px;
     height: 50px;
     font-size: 30px;
     background-color: #4b0082;
     color: #fff;
-    position:relative;
-    left: 150px;
-    bottom: 40px;
+    position:absolute;
+    top: 560px;
+    left: 80px;
 }
 
-.loanshark{
-    width:400px;
-    position:relative;
-    left: 95px;
-    top: 50px;
+.mails{
+    border: 4px solid #000;
+    width: 400px;
+    height: 50px;
+    font-size: 30px;
+    background-color: #4b0082;
+    color: #fff;
+    position:absolute;
+    top: 660px;
+    left: 80px;
 }
+
+.pases{
+    border: 4px solid #000;
+    width: 400px;
+    height: 50px;
+    font-size: 30px;
+    background-color: #4b0082;
+    color: #fff;
+    position:absolute;
+    top: 760px;
+    left: 80px;
+}
+
 .bill{
     width: 300px;
     height: 300px;
-    position:relative;
+    position:absolute;
     bottom: 100px;
+    right: 50px;
+}
+.bills{
+    width: 300px;
+    height: 300px;
+    position:absolute;
+    bottom: 400px;
+    right: 180px;
 }
 
 button{
@@ -156,8 +188,9 @@ button{
     font-size: 50px;
     color: #b22222;
     background-color: #4b0082;
-    bottom: 30px;
-    left: 0px;
+    position:absolute;
+    bottom: 150px;
+    left: 220px;
 
 }
 
