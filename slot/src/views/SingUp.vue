@@ -19,9 +19,9 @@
                 <input class="mails" v-model="mail"/>
                 <p class="pass">パスワード</p>
                 <input class="pases" v-model="password"/>
-                
             </div>
             <img class="bill" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
+            <img class="bills" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
         </div>
 
         <button @click="singup()">登録</button>
@@ -65,6 +65,9 @@ export default {
 
 <style scoped>
 body {
+    position:relative;
+    width: 100%;
+    height: 100%;
     font-family: "Avenir Next";
     background-color: #000000;
     background-image:url("https://www.pakutaso.com/shared/img/thumb/PAK86_hikaritobu420150318210141_TP_V.jpg")
@@ -76,7 +79,9 @@ li {
 
 /*headerの設定、背景の色*/
 .header {
-    background-color: #b22222;    color: #33FF33;
+    position:relative;
+    background-color: #b22222;    
+    color: #33FF33;
     height: 240px;
     background-image:url("https://chicodeza.com/wordpress/wp-content/uploads/okane-illust6.png")
 }
@@ -86,9 +91,9 @@ li {
     float: left;
     font-size: 60px;
     padding: 20px 40px;
-    position:relative;
-    top: 40px;
-    left: 10px;
+    position: absolute;
+    top: 20px;
+    left: 30px;
 }
 
 /*headerおわり*/
@@ -101,7 +106,7 @@ li {
     font-size: 100px;
     color: #DD0000;
     position:absolute;
-    top: 300px;
+    top: 320px;
     left: 30px;
 }
 
@@ -168,6 +173,14 @@ li {
     top: 700px;
     left:600px;
 }
+.bills{
+    width: 300px;
+    height: 300px;
+    position:absolute;
+    top: 400px;
+    left:530px;
+}
+
 
 button{
     width: 120px;
