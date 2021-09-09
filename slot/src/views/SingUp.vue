@@ -52,6 +52,7 @@ export default {
         },)
         .then((response) => {
           console.log(response);
+          location.herf = '/maiin';
         })
         .catch((error) => {
           console.log(error);
