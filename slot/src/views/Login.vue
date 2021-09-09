@@ -1,11 +1,8 @@
 <template>
   <div>
     <div class="header">
-      <div class="header-logo">卍亜琉派華潘堕合法賭博遊戯卍
-      </div>
-      <div class="header-list">
-
-      </div>
+      <div class="header-logo">卍亜琉派華潘堕合法賭博遊戯卍</div>
+      <div class="header-list"></div>
     </div>
 
     <div class="main">
@@ -15,7 +12,7 @@
 
       <div class="contents">
         <h3 class="section-title">ログイン(入力してください)</h3>
-        <div class="contents-item">
+        <div class="contents-item3">
           <p>メールアドレス</p>
         </div>
         <input class="mail" v-model="mail" />
@@ -24,30 +21,36 @@
         </div>
         <input class="pwd" v-model="password" />
         <div class="check">
-          <button @click="login()">ログイン</button>
+          <v-btn @click="login()">
+            <a href="/main"> ログイン</a>
+          </v-btn>
         </div>
       </div>
-      
-      <div class="contact-form"></div>
-          <a href="/singup"><li class="header-item">新規登録</li></a>
-      </div>
-      <img class="loanshark" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png">
-      <img class="loanshark2" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png">
 
+      <div class="contact-form"></div>
+      <a href="/singup"><li class="header-item">新規登録</li></a>
+    </div>
+    <img
+      class="loanshark"
+      src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png"
+    />
+    <img
+      class="loanshark2"
+      src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  
   data: () => {
     return {
-        // 変数定義（今回はメールアドレスとパスワード）
+      // 変数定義（今回はメールアドレスとパスワード）
       mail: "",
       password: "",
     };
   },
-// メゾット定義
+  // メゾット定義
   methods: {
     async login() {
       try {
@@ -67,7 +70,7 @@ export default {
 </script>
 <style scoped>
 body {
-  position:relative;
+  position: relative;
   width: 100%;
   height: 100%;
   font-family: "Avenir Next";
@@ -116,8 +119,19 @@ li {
   color: #800000;
 }
 /*メルアド*/
-.contents-item {
-  position:absolute;
+.contents-item3 {
+  position: absolute;
+  float: left;
+  font-size: 30px;
+  text-align: left;
+  color: #800000;
+  top: 590px;
+  left: 100px;
+}
+
+/*パスワード*/
+.contents-item2 {
+  position: absolute;
   float: left;
   font-size: 30px;
   text-align: left;
@@ -126,24 +140,13 @@ li {
   left: 100px;
 }
 
-/*パスワード*/
-.contents-item2 {
-  position:absolute;
-  float: left;
-  font-size: 30px;
-  text-align: left;
-  color: #800000;
-  top: 950px;
-  left: 100px;
-}
-
 /*メールアドレスを打ち込むところ*/
 .mail {
-  position:absolute;
+  position: absolute;
   float: left;
   width: 400px;
   height: 70px;
-  top: 850px;
+  top: 645px;
   left: 100px;
   border: 3px solid #4b0082;
   background-color: #4b0082;
@@ -153,11 +156,11 @@ li {
 
 /*パスワードを打ち込むところ*/
 .pwd {
-  position:absolute;
+  position: absolute;
   float: left;
   width: 400px;
   height: 70px;
-  top: 985px;
+  top: 835px;
   left: 100px;
   border: 3px solid #4b0082;
   background-color: #4b0082;
@@ -167,7 +170,6 @@ li {
 
 .contents {
   height: 500px;
-
   margin-top: 10px;
 }
 
@@ -196,51 +198,48 @@ li {
 }
 
 /*ログインボタン*/
-button{
-    position:absolute;
-    float: left;
-    width: 120px;
-    height: 80px;
-    font-size: 24px;
-    color: #b22222;
-    background-color: #4b0082;
-    top: 915px;
-    left: 550px;
-
+button {
+  position: absolute;
+  float: left;
+  width: 120px;
+  height: 70px;
+  font-size: 24px;
+  color: #b22222;
+  background-color: #4b0082;
+  top: 835px;
+  left: 600px;
 }
 
 /*新規ログイン『ようこそ！』ボタン*/
-.header-item{
-    position:absolute;
-    float: left;
-    width: 120px;
-    height: 50px;
-    font-size: 24px;
-    color: #b22222;
-    background-color: #4b0082;
-    top: 1130px;
-    left: 100px;
-
+.header-item {
+  position: absolute;
+  float: left;
+  width: 150px;
+  height: 50px;
+  font-size: 30px;
+  text-align: center;
+  color: #b22222;
+  background-color: #4b0082;
+  top: 1000px;
+  left: 100px;
 }
 
 /*アルパカの画像*/
-.loanshark{
-    position:relative;
-    width:250px;
-    height: 250px;
-    position:relative;
-    left: 160px;
-    bottom: 250px;
+.loanshark {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  left: 1100px;
+  bottom: 100px;
 }
 
 /*パンダの画像*/
-.loanshark2{
-    position:relative;
-    width:250px;
-    height: 250px;
-    position:relative;
-    left: 210px;
-    bottom: 250px;
+.loanshark2 {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  left: 1500px;
+  bottom: 100px;
 }
 
 /*フッターの設定*/
