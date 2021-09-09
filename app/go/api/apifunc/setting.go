@@ -8,8 +8,7 @@ import (
 )
 
 type SettingPostParams struct {
-	Path  string `json:"path" validate:"required"`
-	Email string `json:"email" validate:"required"`
+	Path string `json:"path" validate:"required"`
 }
 
 func SettingPost(c echo.Context) error {
@@ -22,32 +21,19 @@ func SettingPost(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
-	err := dbfunc.SettingPost(params.Path, params.Email)
+	err := dbfunc.SettingPost(params.Path, c)
 
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "DBエラー: " + err.Error()})
 	}
 
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "OK"})
-}
-
-type SettingGetParams struct {
-	Email string `json:"email" validate:"required"`
+	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
 }
 
 func SettingGet(c echo.Context) error {
-	var params SettingGetParams
-	if err := c.Bind(&params); err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
-	}
-
-	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
-	}
-
-	s, err := dbfunc.SettingGet(params.Email)
+	s, err := dbfunc.SettingGet(c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "DBエラー: " + err.Error()})
 	}
-	return c.JSON(http.StatusOK, map[string]interface{}{"message": "OK", "setting": s.Path})
+	return c.JSON(http.StatusOK, map[string]interface{}{"setting": s.Path})
 }
