@@ -50,6 +50,7 @@ export default {
     } catch (e) {
       console.log(e);
     }
+    this.$emit("sendImg", this.images);
   },
   methods: {
     // ランダムな画像を表示
