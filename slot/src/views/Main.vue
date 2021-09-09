@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div class="flexbox flexbox-left">
+      <slotComponent v-on:sendImg="receiveImg" />
+      <img v-for="image in this.childImg" :src="image" v-bind:key="image.id" />
+    </div>
     <main>
       <div class="dis">
         <!-- v-on押したら実行される  -->
@@ -40,7 +44,9 @@
       </div>
     </main>
     <v-btn>
-      <router-link to="/setting">絵柄変更</router-link>
+      <router-link to="/setting" style="text-decoration:" none
+        >絵柄変更</router-link
+      >
     </v-btn>
     <chart v-if="showChart"></chart>
   </div>
@@ -60,6 +66,7 @@ body {
   padding: 20px;
   /* border-radius: 12px; */
 }
+
 .dis {
   width: 800px;
   height: 350px;
@@ -89,6 +96,10 @@ body {
 .btn-sf-like:hover {
   text-shadow: -6px 0px 15px rgba(255, 255, 240, 0.83),
     6px 0px 15px rgba(255, 255, 240, 0.83);
+}
+.flexbox {
+  display: flex;
+  flex-direction: column;
 }
 
 .btn-sf-like2 {
@@ -175,6 +186,7 @@ export default {
       coment: "",
       spinCnt: 0,
       showChart: true,
+      childImg: [],
     };
   },
   // 'slot-component'：javaでいうimportと同じ
@@ -214,11 +226,15 @@ export default {
             },
           }
         );
-        console.log(res)
+        console.log(res);
         this.update();
       } catch (e) {
         console.log(e);
       }
+    },
+    receiveImg(images) {
+      this.childImg = images;
+      console.log("hoge", images);
     },
     total() {
       this.axios
