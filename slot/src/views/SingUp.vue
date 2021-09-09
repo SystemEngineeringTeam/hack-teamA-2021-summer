@@ -52,10 +52,11 @@ export default {
         },)
         .then((response) => {
           console.log(response);
-          location.herf = '/maiin';
+          this.$router.push("/login")
         })
         .catch((error) => {
           console.log(error);
+          alert("既に登録されているか,入力がありません")
         });
     },
   },
