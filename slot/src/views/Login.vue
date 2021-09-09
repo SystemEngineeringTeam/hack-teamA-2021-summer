@@ -33,16 +33,13 @@
       </div>
       <img class="loanshark" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png">
       <img class="loanshark2" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png">
-      <selector></selector>
+
   </div>
 </template>
 
 <script>
-import Selector from '@/components/ImageSelector.vue';
 export default {
-  components: {
-    Selector
-  },
+  
   data: () => {
     return {
         // 変数定義（今回はメールアドレスとパスワード）

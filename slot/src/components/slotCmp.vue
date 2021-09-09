@@ -62,7 +62,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 1000); 
+      }, 80); 
     },
     // ストップ時のメゾット
     stop() {
@@ -88,10 +88,10 @@ export default {
 .stop {
   text-decoration: none;
   color: #ffffff;
-
+  /* margin-top: 20px; */
   width: 80px;
   height: 80px;
-  margin-left: 55px;
+  margin-left: 75px;
   line-height: 34px;
   font-size: 40px;
   border-radius: 100%;
@@ -106,8 +106,8 @@ export default {
   user-select: none;
 }
 .panel img {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 250px;
   margin-top: 20px;
   margin-bottom: 70px;
 }
