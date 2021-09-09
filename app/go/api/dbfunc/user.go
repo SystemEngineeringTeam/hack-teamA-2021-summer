@@ -45,8 +45,10 @@ func PostUser(email string, password string, name string) (err error) {
 	}
 
 	// データベースに登録
-	var u models.User = models.User{Email: email, Password: hashStr, Name: name, Coin: 100, UUID: uid.String()}
+	var u models.User = models.User{Email: email, Password: hashStr, Name: name, Coin: 100, SpinCount: 0, UUID: uid.String()}
 	err = db.Create(&u).Error
+	var c models.ChartData = models.ChartData{UserUID: uid.String(), Spin: 0, Coin: 100}
+	err = db.Create(&c).Error
 
 	return err
 }
