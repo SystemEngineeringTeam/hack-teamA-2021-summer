@@ -214,7 +214,8 @@ export default {
             },
           }
         );
-        console.log(res);
+        console.log(res)
+        this.update();
       } catch (e) {
         console.log(e);
       }
@@ -268,7 +269,7 @@ export default {
       }
       this.coin = 100;
     },
-    updata() {
+    update() {
       this.showChart = false;
       this.$nextTick(() => {
         this.showChart = true;
@@ -280,7 +281,6 @@ export default {
       if (this.panelLeft == 0) {
         this.isRunning = false;
         this.panelLeft = 3;
-
         if (
           this.$refs.component1.images[this.$refs.component1.image] !==
             this.$refs.component2.images[this.$refs.component2.image] &&
@@ -331,7 +331,6 @@ export default {
         }
         this.total();
         this.sendChart();
-        this.updata();
       }
     },
   },

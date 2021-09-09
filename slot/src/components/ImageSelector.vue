@@ -41,6 +41,7 @@ export default {
     return {
       selected: "selected",
       itemsList: [],
+      itemname: ["7", "ベル", "チェリー", "リプレイ"]
     };
   },
   methods: {
@@ -95,7 +96,7 @@ export default {
         };
         item.push(src);
       });
-      this.itemsList.push({ name: index, item: item });
+      this.itemsList.push({ name: this.itemname[index], item: item });
       item = [];
     });
     console.log(this.itemsList);

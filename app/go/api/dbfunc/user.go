@@ -3,6 +3,8 @@ package dbfunc
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 	"errors"
+	"io/ioutil"
+	"strings"
 
 	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
@@ -49,6 +51,23 @@ func PostUser(email string, password string, name string) (err error) {
 	err = db.Create(&u).Error
 	var c models.ChartData = models.ChartData{UserUID: uid.String(), Spin: 0, Coin: 100}
 	err = db.Create(&c).Error
+	var imgPath []string
+	files, err := ioutil.ReadDir("./static/img")
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if file.IsDir() {
+			images, err := ioutil.ReadDir("./static/img/" + file.Name())
+			if err != nil {
+				return err
+			}
+			imgPath = append(imgPath, images[0].Name())
+		}
+	}
+	Path := strings.Join(imgPath, ":")
+	var s models.Setting = models.Setting{UserUID: uid.String(), Path: Path}
+	err = db.Create(&s).Error
 
 	return err
 }
