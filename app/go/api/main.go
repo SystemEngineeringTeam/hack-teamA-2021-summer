@@ -3,6 +3,7 @@ package main
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/apifunc"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -16,6 +17,7 @@ type CustomValidator struct {
 }
 
 func (cv *CustomValidator) Validate(i interface{}) error {
+	log.Println(i)
 	if err := cv.validator.Struct(i); err != nil {
 		// Optionally, you could return the error to give each route more control over the status code
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -35,31 +37,37 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Request: %v\n", string(reqBody))
 	}))
 
+	requiredAuth := e.Group("")
+
+	requiredAuth.Use(middleware.JWTWithConfig(middleware.JWTConfig{
+		SigningKey: []byte("secret"),
+	}))
+
 	// http://localhost:8080/coin : GET apifunc->coin.go->CoinPost()
-	e.POST("/coin", apifunc.CoinPost)
+	requiredAuth.POST("/coin", apifunc.CoinPost)
 
 	// http://localhost:8080/user : GET apifunc->user.go->UserGet()
-	e.GET("/user", apifunc.UserGet)
+	requiredAuth.GET("/user", apifunc.UserGet)
 	// http://localhost:8080/user : POST apifunc->user.go->UserPost()
 	e.POST("/user", apifunc.UserPost)
 	// http://localhost:8080/user : PUT apifunc->user.go->UserPut()
-	e.PUT("/user", apifunc.UserPut)
+	requiredAuth.PUT("/user", apifunc.UserPut)
 
 	// http://localhost:8080/login : POST apifunc->login.go->LoginPost()
 	e.POST("/login", apifunc.LoginPost)
 
 	// http://localhost:8080/setting : GET apifunc->setting.go->SettingGet()
-	e.GET("/setting", apifunc.SettingGet)
+	requiredAuth.GET("/setting", apifunc.SettingGet)
 	// http://localhost:8080/setting : POST apifunc->setting.go->SettingPost()
-	e.POST("/setting", apifunc.SettingPost)
+	requiredAuth.POST("/setting", apifunc.SettingPost)
 
 	// http://localhost:8080/images : GET apifunc->images.go->imagesGet()
 	e.GET("/images", apifunc.ImageGet)
 
 	// ChartData : GET apifunc->ChartData.go->ChartDataGet()
-	e.GET("/chartdata", apifunc.ChartDataGet)
+	requiredAuth.GET("/chartdata", apifunc.ChartDataGet)
 	// http://localhost:8080/chartdata : POST apifunc->ChartData.go->ChartDataPost()
-	e.POST("/chartdata", apifunc.ChartDataPost)
+	requiredAuth.POST("/chartdata", apifunc.ChartDataPost)
 
 	// 8080番ポートで待ち受け
 	e.Logger.Fatal(e.Start(":8080"))

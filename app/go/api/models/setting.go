@@ -6,5 +6,5 @@ import "github.com/jinzhu/gorm"
 type Setting struct {
 	gorm.Model        // データベースで使えるようにするために必要
 	Path       string `json:"path" gorm:"type:varchar(1000)"`
-	Email      string `json:"email"`
+	UserUID    string `json:"user_uid"`
 }
