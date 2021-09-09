@@ -182,13 +182,11 @@ export default {
               Authorization: "Bearer " + this.$cookie.get("token"),
             },
         });
-        
     var coin = res.data.coin;
     this.coin = coin;
     }catch(e){
         console.log(e);
     }
-    
   },
   methods: {
     total() {
