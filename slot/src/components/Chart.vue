@@ -4,7 +4,6 @@ import { Line } from 'vue-chartjs';
 export default {
   extends: Line,
   name: 'LineChart',
-  props: ['user'],
   data:() => ({
     chartdata: {
       labels: [],
@@ -23,7 +22,7 @@ export default {
   async mounted (){
     var data = await this.axios.get('http://localhost:8080/chartdata', {
       headers: {
-        email: this.user
+        Authorization: 'Bearer ' + this.$cookie.get("token")
       },
     });
     data.data.data.forEach(element => {
