@@ -43,6 +43,8 @@ func PostChartData(c echo.Context, spin int, coin int) (err error) {
 		return err
 	}
 
+	err = db.Model(models.User{}).Where("uuid = ?", u.UUID).Select("spin_count").Updates(models.User{SpinCount: spin}).Error
+
 	d := models.ChartData{UserUID: u.UUID, Spin: spin, Coin: coin}
 	err = db.Create(&d).Error
 	if err != nil {
