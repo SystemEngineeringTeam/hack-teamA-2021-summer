@@ -7,7 +7,7 @@
 
         <div class="main">
         <div class="copy-container">
-            <h1>ようこそ賭博へ！</h1>
+            <h1>ようこそ賭博へ</h1>
         </div>
         
         <div class="contents">
