@@ -2,6 +2,8 @@ package dbfunc
 
 import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
+
+	"github.com/labstack/echo/v4"
 )
 
 type ChartData struct {
@@ -9,12 +11,13 @@ type ChartData struct {
 	coin int `json:"coin"`
 }
 
-func GetChartData(email string) (data []map[string]int, err error) {
+func GetChartData(c echo.Context) (data []map[string]int, err error) {
 	db := sqlConnect()
 	defer db.Close()
 
 	var u models.User
-	if err = db.Where("email = ?", email).First(&u).Error; err != nil {
+	u, err = GetUserFromToken(c)
+	if err != nil {
 		return nil, err
 	}
 
@@ -30,12 +33,13 @@ func GetChartData(email string) (data []map[string]int, err error) {
 	return data, err
 }
 
-func PostChartData(email string, spin int, coin int) (err error) {
+func PostChartData(c echo.Context, spin int, coin int) (err error) {
 	db := sqlConnect()
 	defer db.Close()
 
 	var u models.User
-	if err = db.Where("email = ?", email).First(&u).Error; err != nil {
+	u, err = GetUserFromToken(c)
+	if err != nil {
 		return err
 	}
 

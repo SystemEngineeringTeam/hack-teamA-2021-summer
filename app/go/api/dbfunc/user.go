@@ -4,19 +4,22 @@ import (
 	"SystemEngineeringTeam/hack-teamA-2021-summer/models"
 	"errors"
 
+	"github.com/golang-jwt/jwt"
 	"github.com/google/uuid"
+	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt" //パスワードをハッシュ化するために使用
 )
 
-func GetUserInfo(email string) (user models.User, err error) {
+func GetUserInfo(c echo.Context) (user models.User, err error) {
 	db := sqlConnect()
 	defer db.Close()
 
-	// データベースからユーザー情報を取得
-	var u models.User
-	err = db.Where("email = ?", email).First(&u).Error //e-mailを元にユーザー情報を取得
+	user, err = GetUserFromToken(c)
+	if err != nil {
+		return user, err
+	}
 
-	return u, err //接続できなかったり、データがないときはエラーを出す
+	return user, err //接続できなかったり、データがないときはエラーを出す
 }
 
 func PostUser(email string, password string, name string) (err error) {
@@ -48,22 +51,18 @@ func PostUser(email string, password string, name string) (err error) {
 	return err
 }
 
-func PutUser(email string, password string, name string) (err error) {
+func PutUser(c echo.Context, name string) (err error) {
 	db := sqlConnect()
 	defer db.Close()
 
 	// データベースに存在しているか確認
-	var u models.User
-	if err = db.Where("email = ?", email).First(&u).Error; err != nil {
+	user, err := GetUserFromToken(c)
+	if err != nil {
 		return err
-	}
-	// パスワードを確かめる
-	if !ComparePassword(u.Password, password) {
-		return errors.New("wrong password")
 	}
 
 	// データベースを更新
-	err = db.Model(models.User{}).Where("email = ?", email).Select("email", "name").Updates(models.User{Email: email, Name: name}).Error
+	err = db.Model(models.User{}).Where("uuid = ?", user.UUID).Select("name").Updates(models.User{Name: name}).Error
 
 	return err
 }
@@ -80,4 +79,19 @@ func ComparePassword(hashStr string, inputPass string) (Ok bool) {
 		Ok = false
 	}
 	return Ok
+}
+
+func GetUserFromToken(c echo.Context) (u models.User, err error) {
+	db := sqlConnect()
+	defer db.Close()
+
+	// トークンを取得
+	token := c.Get("user").(*jwt.Token)
+	claims := token.Claims.(jwt.MapClaims)
+	uid := claims["uid"].(string)
+
+	// データベースからユーザー情報を取得
+	err = db.Where("uuid = ?", uid).First(&u).Error
+
+	return u, err
 }

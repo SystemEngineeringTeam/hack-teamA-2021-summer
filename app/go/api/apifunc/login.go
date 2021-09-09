@@ -38,7 +38,7 @@ func LoginPost(c echo.Context) error {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	climes := token.Claims.(jwt.MapClaims)
-	climes["uid"] = user.ID
+	climes["uid"] = user.UUID
 	climes["exp"] = time.Now().Add(time.Hour * 24 * 3).Unix()
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {

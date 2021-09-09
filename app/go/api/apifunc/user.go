@@ -7,25 +7,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type UserGetParams struct {
-	Email string `json:"email" validate:"required"`
-}
-
 // success: return (json){email: (string), name: (string)}
 // error: return (json){"message": (string)}
 func UserGet(c echo.Context) error {
-	// 送られてきたJSONを確かめる
-	var params UserGetParams
-	if err := c.Bind(&params); err != nil {
-		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
-	} //データが足りないときにエラーを出す
-
-	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
-	}
-
 	// 送られてきたデータを元にDBから取得する
-	user, err := dbfunc.GetUserInfo(params.Email)
+	user, err := dbfunc.GetUserInfo(c)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データが取得できませんでした: " + err.Error()})
 	}
@@ -60,11 +46,15 @@ func UserPost(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
 }
 
+type UserPutParams struct {
+	Name string `json:"name" validate:"required"`
+}
+
 // success: return (json){"message": (string)}
 // error: return (json){"message": (string)}
 func UserPut(c echo.Context) error {
 	// 送られてきたJSONを確かめる
-	var params UserPostParams
+	var params UserPutParams
 	if err := c.Bind(&params); err != nil {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
@@ -74,7 +64,7 @@ func UserPut(c echo.Context) error {
 	}
 
 	// 送られてきたデータを元にDBを更新する
-	if err := dbfunc.PutUser(params.Email, params.Password, params.Name); err != nil {
+	if err := dbfunc.PutUser(c, params.Name); err != nil {
 		return c.JSON(http.StatusOK, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
 	}
 
