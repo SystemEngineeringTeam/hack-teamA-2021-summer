@@ -30,16 +30,16 @@ func UserPost(c echo.Context) error {
 	// 送られてきたJSONを確かめる
 	var params UserPostParams
 	if err := c.Bind(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	// 送られてきたデータを元にDBに登録する
 	if err := dbfunc.PostUser(params.Email, params.Password, params.Name); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "データベースへの登録に失敗しました:" + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースへの登録に失敗しました:" + err.Error()})
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
@@ -55,16 +55,16 @@ func UserPut(c echo.Context) error {
 	// 送られてきたJSONを確かめる
 	var params UserPutParams
 	if err := c.Bind(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが正しくありません: " + err.Error()})
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	// 送られてきたデータを元にDBを更新する
 	if err := dbfunc.PutUser(c, params.Name); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "データベースの更新に失敗しました: " + err.Error()})
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{"message": "success"})
