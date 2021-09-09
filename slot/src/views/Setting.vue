@@ -4,7 +4,7 @@
       <h1>画像の設定</h1>
     </div>
     <selector></selector>
-    <chart user="test@test"></chart>
+    <chart></chart>
   </div>
 </template>
 
@@ -14,7 +14,6 @@ import Selector from '@/components/ImageSelector.vue';
 export default {
   data: () => {
     return {
-
     };
   },
   components: {
@@ -30,5 +29,4 @@ export default {
 body {
   font-family: "Avenir Next";
 }
-
 </style>
