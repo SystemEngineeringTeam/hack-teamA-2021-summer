@@ -161,7 +161,7 @@ input {
 </style>
 <script>
 import slotComponent from "@/components/slotCmp.vue";
-import Chart from '../components/Chart.vue';
+import Chart from "../components/Chart.vue";
 // import App from "@/views/App.vue";
 export default {
   // el: '#app',
@@ -179,39 +179,45 @@ export default {
   // 'slot-component'：javaでいうimportと同じ
   components: {
     "slot-component": slotComponent,
-    "Chart": Chart,
+    Chart: Chart,
   },
 
   async created() {
-    try{
-        var res = await this.axios.get("http://localhost:8080/user",{
-             headers: {
-              Authorization: "Bearer " + this.$cookie.get("token"),
-            },
-        });
-    var coin = res.data.coin;
-    var spin = res.data.spin;
-    this.coin = coin;
-    this.spinCnt = spin;
-    }catch(e){
-        console.log(e);
+    try {
+      var res = await this.axios.get("http://localhost:8080/user", {
+        headers: {
+          Authorization: "Bearer " + this.$cookie.get("token"),
+        },
+      });
+      var coin = res.data.coin;
+      var spin = res.data.spin;
+      this.coin = coin;
+      this.spinCnt = spin;
+    } catch (e) {
+      console.log(e);
     }
   },
   methods: {
-    sendChart(){
-      try{
-        var res = res = await this.axios.post("http://localhost:8080//chartdata",
-        {
-          "spin": this.spinCnt,
-          "coin": this.coin
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + this.$cookie.get("token"),
+    async sendChart() {
+      try {
+        var res = await this.axios.post(
+          "http://localhost:8080//chartdata",
+          {
+            spin: this.spinCnt,
+            coin: this.coin,
           },
-        })
-      }catch(e){
-        console.log(e)
+          {
+            headers: {
+              Authorization: "Bearer " + this.$cookie.get("token"),
+            },
+          }
+        );
+        var coin = res.data.coin;
+        var spin = res.data.spin;
+        this.coin = coin;
+        this.spinCnt = spin;
+      } catch (e) {
+        console.log(e);
       }
     },
     total() {
