@@ -171,7 +171,7 @@ export default {
       isRunning: false,
       isNotAllCorrect: true,
       isR: true,
-      coin: 100,
+      coin: 0,
       coment: "",
       spinCnt: 0,
       showChart: true,
@@ -214,7 +214,7 @@ export default {
             },
           }
         );
-        console.log(res)
+        console.log(res);
       } catch (e) {
         console.log(e);
       }
@@ -270,7 +270,9 @@ export default {
     },
     updata() {
       this.showChart = false;
-      this.$nextTick(() => {this.showChart = true;});
+      this.$nextTick(() => {
+        this.showChart = true;
+      });
     },
     // 実行されたらpanelLeftが１ずつマイナスされていく。panelLeftが０になるとthis.isRunning = falseにし、回転を止める
     decrementPanel: function() {
@@ -280,51 +282,51 @@ export default {
         this.panelLeft = 3;
 
         if (
-          this.$refs.component1.image !== this.$refs.component2.image &&
-          this.$refs.component1.image !== this.$refs.component3.image
+          this.$refs.component1.images[this.$refs.component1.image] !==
+            this.$refs.component2.images[this.$refs.component2.image] &&
+          this.$refs.component1.images[this.$refs.component1.image] !==
+            this.$refs.component3.images[this.$refs.component3.image]
         ) {
           this.$refs.component1.isUnmatched = true;
         }
         if (
-          this.$refs.component2.image !== this.$refs.component1.image &&
-          this.$refs.component2.image !== this.$refs.component3.image
+          this.$refs.component2.images[this.$refs.component2.image] !==
+            this.$refs.component1.images[this.$refs.component1.image] &&
+          this.$refs.component2.images[this.$refs.component2.image] !==
+            this.$refs.component3.images[this.$refs.component3.image]
         ) {
           this.$refs.component2.isUnmatched = true;
         }
         if (
-          this.$refs.component3.image !== this.$refs.component1.image &&
-          this.$refs.component3.image !== this.$refs.component2.image
+          this.$refs.component3.images[this.$refs.component3.image] !==
+            this.$refs.component1.images[this.$refs.component1.image] &&
+          this.$refs.component3.images[this.$refs.component3.image] !==
+            this.$refs.component2.images[this.$refs.component2.image]
         ) {
           this.$refs.component3.isUnmatched = true;
         }
         if (
-          this.$refs.component1.image == this.$refs.component2.image &&
-          this.$refs.component1.image == this.$refs.component3.image &&
-          this.$refs.component2.image == this.$refs.component3.image
+          this.$refs.component1.images[this.$refs.component1.image] ==
+            this.$refs.component2.images[this.$refs.component2.image] &&
+          this.$refs.component1.images[this.$refs.component1.image] ==
+            this.$refs.component3.images[this.$refs.component3.image] &&
+          this.$refs.component2.images[this.$refs.component2.image] ==
+            this.$refs.component3.images[this.$refs.component3.image]
         ) {
-          switch (this.$refs.component1.image) {
-            case 0:
-              // <p>+300</p>
-              // this.coment = "+300";
-              this.coin += 300;
-              break;
-
-            case 1:
-              // this.coment = "+200";
-              this.coin += 200;
-
-              break;
-
-            case 2:
-              // <p>+100</p>
-              // this.coment = "+100";
-              this.coin += 100;
-              break;
-
-            case 3:
-              // this.coment = "もう１度";
-              this.isR = false;
-              break;
+          if (this.$refs.component1.image == 0) {
+            this.coin += 300;
+          } else if (this.$refs.component1.image == 1) {
+            this.coin += 200;
+          } else if (
+            this.$refs.component1.image == 2 ||
+            this.$refs.component1.image == 4
+          ) {
+            this.coin += 100;
+          } else if (
+            this.$refs.component1.image == 3 ||
+            this.$refs.component1.image == 5
+          ) {
+            this.isR = false;
           }
         }
         this.total();

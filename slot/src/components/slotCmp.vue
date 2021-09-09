@@ -82,7 +82,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 2000);
+      }, 50);
     },
     // ストップ時のメゾット
     stop() {
