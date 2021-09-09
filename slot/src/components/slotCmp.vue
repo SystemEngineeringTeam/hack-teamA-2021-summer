@@ -62,7 +62,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 1000); 
+      }, 80); 
     },
     // ストップ時のメゾット
     stop() {

@@ -37,6 +37,8 @@
         </div>
            
       </main>
+      <a href="#" class="btn-sf-like"
+      @click = total()>セーブ</a>
     </div>
 </template>
 <style scoped>
@@ -154,7 +156,22 @@ import slotComponent from '@/components/slotCmp.vue'
                 'slot-component': slotComponent
             },
             methods: {
-
+                total() {
+            this.axios
+            //   今回はポストに接続するので.postにする。第一引数に宛先を指定、第二引数に送りたいデータを指定する
+                .post("http://localhost:8080/coin", {
+                total: this.coin,
+                password: this.password,
+                },)
+                // 成功した場合（.then)console.logにresponseを返す
+                .then((response) => {
+                console.log(response);
+                })
+                // 失敗した場合(.catch)console.logにerrorを返す
+                .catch((error) => {
+                console.log(error);
+                });
+            },
                 // 押したときに実行、
                 spin() {
                     if (this.isRunning) {
@@ -213,23 +230,23 @@ import slotComponent from '@/components/slotCmp.vue'
                                 switch(this.$refs.component1.image){
                                     case 0:
                                         // <p>+300</p>
-                                        this.coment = "+300";
+                                        // this.coment = "+300";
                                         this.coin += 300;
                                         break;
                                     
                                     case 1:
-                                        this.coment = "+200";
+                                        // this.coment = "+200";
                                         this.coin += 200;
                                         break;
 
                                     case 2:
                                         // <p>+100</p>
-                                        this.coment = "+100";
+                                        // this.coment = "+100";
                                         this.coin += 100;
                                         break;
 
                                     case 3:
-                                        this.coment = "もう１度";
+                                        // this.coment = "もう１度";
                                         this.isR = false;
                                         break;
                                         
