@@ -23,7 +23,7 @@ func LoginPost(c echo.Context) error {
 	}
 
 	if err := c.Validate(&params); err != nil {
-		return c.JSON(http.StatusOK, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{"message": "パラメータが不足しています: " + err.Error()})
 	}
 
 	user, err := dbfunc.PostLoginInfo(params.Email, params.Password)

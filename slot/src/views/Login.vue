@@ -60,11 +60,15 @@ export default {
         });
         this.$cookie.set("token", res.data.token);
         console.log(res);
+        this.$router.push("/main")
+
       } catch (e) {
         console.log(e);
         alert("ログインに失敗しました");
+        
       }
     },
+    
   },
 };
 </script>
