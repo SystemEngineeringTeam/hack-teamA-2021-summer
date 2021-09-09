@@ -2,7 +2,7 @@
     <div>
       <div v-for="(items, index) in itemsList" :key="index">
         <v-row justify="center" align-content="center">
-          {{  items.name }}
+          <div style="padding: 0px 50px">{{ items.name }}</div>
           <div v-for="(item, index) in items.item" :key="index">
             <div v-bind:class="item.selected? selected : null ">
               <v-col v-bind:class="item.selected? selected : null " cols="12" sm="8" md="6" lg="4" xl="3">
