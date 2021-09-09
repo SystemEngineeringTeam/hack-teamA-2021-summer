@@ -30,6 +30,7 @@ export default {
         this.chartdata.labels.push(element.spin);
         this.chartdata.datasets[0].data.push(element.coin);
       });
+      console.log(data)
       this.renderChart(this.chartdata, this.options);
     } catch (error) {
       console.log(error);

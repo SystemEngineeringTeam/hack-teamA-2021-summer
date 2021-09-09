@@ -42,7 +42,7 @@
     <v-btn>
       <router-link to="/setting">絵柄変更</router-link>
     </v-btn>
-    <chart></chart>
+    <chart v-if="showChart"></chart>
   </div>
 </template>
 <style scoped>
@@ -174,6 +174,7 @@ export default {
       coin: 100,
       coment: "",
       spinCnt: 0,
+      showChart: true,
     };
   },
   // 'slot-component'：javaでいうimportと同じ
@@ -199,9 +200,10 @@ export default {
   },
   methods: {
     async sendChart() {
+      this.spinCnt += 1;
       try {
         var res = await this.axios.post(
-          "http://localhost:8080//chartdata",
+          "http://localhost:8080/chartdata",
           {
             spin: this.spinCnt,
             coin: this.coin,
@@ -212,10 +214,7 @@ export default {
             },
           }
         );
-        var coin = res.data.coin;
-        var spin = res.data.spin;
-        this.coin = coin;
-        this.spinCnt = spin;
+        console.log(res)
       } catch (e) {
         console.log(e);
       }
@@ -268,6 +267,10 @@ export default {
         return;
       }
       this.coin = 100;
+    },
+    updata() {
+      this.showChart = false;
+      this.$nextTick(() => {this.showChart = true;});
     },
     // 実行されたらpanelLeftが１ずつマイナスされていく。panelLeftが０になるとthis.isRunning = falseにし、回転を止める
     decrementPanel: function() {
@@ -326,6 +329,7 @@ export default {
         }
         this.total();
         this.sendChart();
+        this.updata();
       }
     },
   },
