@@ -76,7 +76,7 @@ export default {
           }
         );
         console.log(res);
-        alert("保存しました")
+        alert("保存しました");
       } catch (e) {
         console.log(e);
       }
