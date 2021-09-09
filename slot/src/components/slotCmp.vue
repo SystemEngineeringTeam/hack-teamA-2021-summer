@@ -22,6 +22,8 @@ export default {
         require("@/assets/B.jpg"),
         require("@/assets/c.jpg"),
         require("@/assets/r.jpg"),
+        require("@/assets/c.jpg"),
+        require("@/assets/r.jpg"),
       ],
     //   image: Math.floor(Math.random() * this.images.length),
       image: 0,
@@ -30,6 +32,23 @@ export default {
       isUnmatched: false,
       
     };
+  },
+  async created(){
+      try{
+        var res = await this.axios.get("http://localhost:8080/setting",{
+            headers: {
+              Authorization: "Bearer " + this.$cookie.get("token"),
+            },
+        });
+        console.log(res)
+        var images = res.data.setting.split(":");
+        for(let i = 0; i < images.length; i++){
+            images[i] = 'http://localhost:8080/static/img/set' + (i + 1) + "/" + images[i];
+        }
+       this.images = images;
+    }catch(e){
+        console.log(e);
+    }
   },
   methods: {
     // ランダムな画像を表示
@@ -62,7 +81,7 @@ export default {
         // this.getRandomImage();
         this.getImage();
         this.spin();
-      }, 1000); 
+      }, 80); 
     },
     // ストップ時のメゾット
     stop() {
@@ -88,10 +107,10 @@ export default {
 .stop {
   text-decoration: none;
   color: #ffffff;
-
+  /* margin-top: 20px; */
   width: 80px;
   height: 80px;
-  margin-left: 55px;
+  margin-left: 75px;
   line-height: 34px;
   font-size: 40px;
   border-radius: 100%;
@@ -106,8 +125,8 @@ export default {
   user-select: none;
 }
 .panel img {
-  width: 200px;
-  height: 200px;
+  width: 240px;
+  height: 250px;
   margin-top: 20px;
   margin-bottom: 70px;
 }
