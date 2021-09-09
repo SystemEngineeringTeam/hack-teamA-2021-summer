@@ -17,19 +17,19 @@
         <h3 class="section-title">ログイン(入力してください)</h3>
         <div class="contents-item">
           <p>メールアドレス</p>
-          <input v-model="mail" />
-          <p>パスワード</p>
-          <input v-model="password" />
         </div>
+        <input class="mail" v-model="mail" />
+        <div class="contents-item2">
+          <p>パスワード</p>
+        </div>
+        <input class="pwd" v-model="password" />
         <div class="check">
           <button @click="login()">ログイン</button>
         </div>
       </div>
       
       <div class="contact-form"></div>
-          <p class="newlogin">新規登録</p>
-          
-          <a href="/singup"><li class="header-item">ようこそ！</li></a>
+          <a href="/singup"><li class="header-item">新規登録</li></a>
       </div>
       <img class="loanshark" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png">
       <img class="loanshark2" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png">
@@ -67,6 +67,9 @@ export default {
 </script>
 <style scoped>
 body {
+  position:relative;
+  width: 100%;
+  height: 100%;
   font-family: "Avenir Next";
 }
 
@@ -112,17 +115,54 @@ li {
   text-align: left;
   color: #800000;
 }
-/*メルアド、パスワード*/
+/*メルアド*/
 .contents-item {
-  font-size: 50px;
+  position:absolute;
+  float: left;
+  font-size: 30px;
   text-align: left;
   color: #800000;
+  top: 780px;
+  left: 100px;
+}
+
+/*パスワード*/
+.contents-item2 {
+  position:absolute;
+  float: left;
+  font-size: 30px;
+  text-align: left;
+  color: #800000;
+  top: 950px;
+  left: 100px;
 }
 
 /*メールアドレスを打ち込むところ*/
-input {
+.mail {
+  position:absolute;
+  float: left;
+  width: 400px;
+  height: 70px;
+  top: 850px;
+  left: 100px;
   border: 3px solid #4b0082;
   background-color: #4b0082;
+  color: #fff;
+  font-size: 30px;
+}
+
+/*パスワードを打ち込むところ*/
+.pwd {
+  position:absolute;
+  float: left;
+  width: 400px;
+  height: 70px;
+  top: 985px;
+  left: 100px;
+  border: 3px solid #4b0082;
+  background-color: #4b0082;
+  color: #fff;
+  font-size: 30px;
 }
 
 .contents {
@@ -157,37 +197,29 @@ input {
 
 /*ログインボタン*/
 button{
-    position:relative;
+    position:absolute;
     float: left;
     width: 120px;
     height: 80px;
     font-size: 24px;
     color: #b22222;
     background-color: #4b0082;
-    bottom: 150px;
+    top: 915px;
     left: 550px;
 
 }
-/*新規ログイン*/
-.newlogin{
-  position:relative;
-  float: left;
-  font-size: 24px;
-  color: #b22222;
-  bottom: 100px;
-  left: 115px;
-}
+
 /*新規ログイン『ようこそ！』ボタン*/
 .header-item{
-    position:relative;
+    position:absolute;
     float: left;
     width: 120px;
-    height: 80px;
+    height: 50px;
     font-size: 24px;
     color: #b22222;
     background-color: #4b0082;
-    bottom: 60px;
-    left: 10px;
+    top: 1130px;
+    left: 100px;
 
 }
 
