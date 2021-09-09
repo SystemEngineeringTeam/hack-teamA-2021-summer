@@ -27,6 +27,7 @@
            コイン
            リセット
             </a>
+            <!-- <v-btn @click="$router.push('settting')">画像選択するよ</v-btn> -->
            <div
           class="spin"
           v-on:click="spin()"
@@ -37,7 +38,7 @@
         </div>
            
       </main>
-      <a href="#" class="btn-sf-like"
+      <a href="#" class="btn-sf-like2"
       @click = total()>セーブ</a>
     </div>
 </template>
@@ -49,17 +50,17 @@
             font-family: Arial, Helvetica, sans-serif;
         }
         .sub{
-            fontsize: 20px;
+            font-size: 30px;
             color: #ffffff;
-            width: 100px;
-            height: 50px;
+            width: 200px;
+            height: 300px;
             padding: 20px;
-            border-radius: 12px;
+            /* border-radius: 12px; */
             
         }
         .dis{
-            width: 700px;
-            height: 250px;
+            width: 800px;
+            height: 350px;
             background: #dab300;
             padding: 20px;
             border-radius: 12px;
@@ -80,16 +81,40 @@
             border-top: solid 3px #00a3d4;
             border-bottom: solid 3px #00a3d4;
             transition: .4s;
-            font-size: 20px;
+            font-size: 15px;
+            margin-top: 50px;
 }
 
         .btn-sf-like:hover {
         text-shadow: -6px 0px 15px rgba(255, 255, 240, 0.83),
                     6px 0px 15px rgba(255, 255, 240, 0.83);
         }
+
+                .btn-sf-like2 {
+                    width: 400px;
+            position: relative;
+            display: inline-block;
+            font-weight: bold;
+            text-decoration: none;
+            color: #FFF;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.73);
+            padding: 0.3em 0.5em;
+            background: #00bcd4;
+            border-top: solid 3px #00a3d4;
+            border-bottom: solid 3px #00a3d4;
+            transition: .4s;
+            font-size: 40px;
+            /* margin-top: 50px; */
+}
+
+        .btn-sf-like2:hover {
+        text-shadow: -6px 0px 15px rgba(255, 255, 240, 0.83),
+                    6px 0px 15px rgba(255, 255, 240, 0.83);
+        }
+
         main {
-            width: 900px;
-            height: 400px;
+            width: 1100px;
+            height: 500px;
             background: rgb(178,34,34);
             padding: 20px;
             /* border: 50px solid #fff; */
@@ -117,7 +142,7 @@
     font-size: 20px;
     color: rgb(255, 255, 255);
     user-select: none;
-    margin-top: 200px;
+    margin-top: 100px;
   color: #fff;        /* 文字色を白に指定 */ 
   background: rgb(2, 133, 255);   /* 背景色をオレンジに指定 */
   animation: flash 1s infinite; /* アニメーションflashを1秒ごとに繰り返す */
