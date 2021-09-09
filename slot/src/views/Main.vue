@@ -186,8 +186,11 @@ import slotComponent from '@/components/slotCmp.vue'
             //   今回はポストに接続するので.postにする。第一引数に宛先を指定、第二引数に送りたいデータを指定する
                 .post("http://localhost:8080/coin", {
                 total: this.coin,
-                password: this.password,
-                },)
+                },{
+                //     headers:{
+                // Authorization: "Bearer " + 
+                //     }
+                })
                 // 成功した場合（.then)console.logにresponseを返す
                 .then((response) => {
                 console.log(response);
@@ -242,7 +245,6 @@ import slotComponent from '@/components/slotCmp.vue'
                             this.$refs.component2.image !== this.$refs.component3.image) {
 
                             this.$refs.component2.isUnmatched = true;
-
                         }
                         if (this.$refs.component3.image !== this.$refs.component1.image && 
                             this.$refs.component3.image !== this.$refs.component2.image) {
@@ -274,12 +276,11 @@ import slotComponent from '@/components/slotCmp.vue'
                                         // this.coment = "もう１度";
                                         this.isR = false;
                                         break;
-                                        
                                 }
 
                             }
                         
-                         
+                        
                         // if(this.$refs.component1.image == this.$refs.component2.image == this.$refs.component3.image){
                         //     for(let i = 0; i < this.data.image.length; i++){
                         //         if(i == 1){
