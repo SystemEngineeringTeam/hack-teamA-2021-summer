@@ -62,6 +62,7 @@ export default {
         // 成功した場合（.then)console.logにresponseを返す
         .then((response) => {
           console.log(response);
+          location.href = '/main';
         })
         // 失敗した場合(.catch)console.logにerrorを返す
         .catch((error) => {
