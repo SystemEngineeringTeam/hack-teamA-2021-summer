@@ -2,12 +2,12 @@
   <div>
     <body>
         <div class="header">
-        <div class="header-logo">ようこそ賭博へ!</div>
+        <div class="header-logo">卍亜琉派華潘堕合法賭博遊戯卍</div>
         </div>
 
         <div class="main">
         <div class="copy-container">
-            <h1>闇落ちの儀式</h1>
+            <h1>ようこそ賭博へ！</h1>
         </div>
         
         <div class="contents">
@@ -22,7 +22,6 @@
                 
             </div>
             <img class="bill" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
-            <img class="bills" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
         </div>
 
         <button @click="singup()">登録</button>
@@ -66,12 +65,9 @@ export default {
 
 <style scoped>
 body {
-    position: relative;
-    padding:0;
     font-family: "Avenir Next";
     background-color: #000000;
     background-image:url("https://www.pakutaso.com/shared/img/thumb/PAK86_hikaritobu420150318210141_TP_V.jpg")
-    
 }
 
 li {
@@ -80,21 +76,19 @@ li {
 
 /*headerの設定、背景の色*/
 .header {
-    position: relative;
-    padding:0;
     background-color: #b22222;    color: #33FF33;
-    height: 300px;
+    height: 240px;
     background-image:url("https://chicodeza.com/wordpress/wp-content/uploads/okane-illust6.png")
 }
 
 /*heder、チーム名とかロゴ的な何かの大きさ、位置*/
 .header-logo {
     float: left;
-    font-size: 120px;
+    font-size: 60px;
     padding: 20px 40px;
-    position:absolute;
-    top: 0;
-    left: 0;
+    position:relative;
+    top: 40px;
+    left: 10px;
 }
 
 /*headerおわり*/
@@ -106,31 +100,32 @@ li {
 .copy-container h1 {
     font-size: 100px;
     color: #DD0000;
-    position: absolute;
-    top: 220px;
-    left: 10px;
+    position:absolute;
+    top: 300px;
+    left: 30px;
 }
 
 .name {
     color: #fff;
     font-size: 30px;
     position:absolute;
+    left: 100px;
     top: 500px;
-    left: 80px;
 }
 .mail {
     color: #fff;
     position:absolute;
+    left: 100px;
     top: 600px;
-    left: 80px;
 }
 .pass {
     color: #fff;
     position:absolute;
+    left: 100px;
     top: 700px;
-    left: 80px;
 }
 
+/*メールアドレスを打ち込むところ*/
 .names{
     border: 4px solid #000;
     width: 400px;
@@ -139,10 +134,9 @@ li {
     background-color: #4b0082;
     color: #fff;
     position:absolute;
-    top: 560px;
-    left: 80px;
+    left: 100px;
+    top:560px;
 }
-
 .mails{
     border: 4px solid #000;
     width: 400px;
@@ -151,10 +145,9 @@ li {
     background-color: #4b0082;
     color: #fff;
     position:absolute;
-    top: 660px;
-    left: 80px;
+    left: 100px;
+    top:660px;
 }
-
 .pases{
     border: 4px solid #000;
     width: 400px;
@@ -163,23 +156,17 @@ li {
     background-color: #4b0082;
     color: #fff;
     position:absolute;
-    top: 760px;
-    left: 80px;
+    left: 100px;
+    top:760px;
 }
+
 
 .bill{
     width: 300px;
     height: 300px;
     position:absolute;
-    bottom: 100px;
-    right: 50px;
-}
-.bills{
-    width: 300px;
-    height: 300px;
-    position:absolute;
-    bottom: 400px;
-    right: 180px;
+    top: 700px;
+    left:600px;
 }
 
 button{
@@ -189,8 +176,8 @@ button{
     color: #b22222;
     background-color: #4b0082;
     position:absolute;
-    bottom: 150px;
-    left: 220px;
+    left: 200px;
+    top:850px;
 
 }
 
