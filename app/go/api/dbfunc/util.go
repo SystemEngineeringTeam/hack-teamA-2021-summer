@@ -18,7 +18,7 @@ func init() {
 	}
 
 	db := sqlConnect()
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Setting{}, &models.ChartData{})
 	defer db.Close()
 }
 

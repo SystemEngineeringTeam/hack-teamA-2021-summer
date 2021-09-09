@@ -2,33 +2,32 @@
   <div>
     <body>
         <div class="header">
-        <div class="header-logo">チームA</div>
+        <div class="header-logo">ようこそ賭博へ!</div>
         </div>
 
         <div class="main">
         <div class="copy-container">
-            <h1>新規登録</h1>
+            <h1>闇落ちの儀式</h1>
         </div>
         
         <div class="contents">
-            <h3 class="section-title">登録情報をご記入ください</h3>
+            
             <div class="contents-item">
-                <p>お名前</p>
+                <p class="name">お名前</p>
                 <input v-model="name"/>
-                <p>メールアドレス</p>
+                <p class="mail">メールアドレス</p>
                 <input v-model="mail"/>
-                <p>パスワード</p>
+                <p class="pass">パスワード</p>
                 <input v-model="password"/>
-                <button @click="singup()">登録</button>
+                
             </div>
+            <img class="bill" src="https://tsukatte.com/wp-content/uploads/2020/08/money-with-wings.png">
         </div>
+
+        <button @click="singup()">登録</button>
         
         <div class="contact-form">
         </div>
-        </div>
-        
-        <div class="footer">
-        <div class="footer-logo">hack-teamA-2021-summer</div>
         </div>
     </body>
     </div>    
@@ -67,6 +66,8 @@ export default {
 <style scoped>
 body {
     font-family: "Avenir Next";
+    background-color: #000000;
+    background-image:url("https://www.pakutaso.com/shared/img/thumb/PAK86_hikaritobu420150318210141_TP_V.jpg")
 }
 
 li {
@@ -75,15 +76,19 @@ li {
 
 /*headerの設定、背景の色*/
 .header {
-    background-color: #26d0c9;    color: #fff;
-    height: 90px;
+    background-color: #b22222;    color: #33FF33;
+    height: 300px;
+    background-image:url("https://chicodeza.com/wordpress/wp-content/uploads/okane-illust6.png")
 }
 
 /*heder、チーム名とかロゴ的な何かの大きさ、位置*/
 .header-logo {
     float: left;
-    font-size: 36px;
+    font-size: 120px;
     padding: 20px 40px;
+    position:relative;
+    top: 40px;
+    left: 10px;
 }
 
 /*headerおわり*/
@@ -94,17 +99,66 @@ li {
 
 .copy-container h1 {
     font-size: 100px;
+    color: #DD0000;
+    position:relative;
+    left: 10px;
+}
+
+.name {
+    color: #fff;
+    font-size: 30px;
+    position:relative;
+    left: 0px;
+    bottom: 10px;
+}
+.mail {
+    color: #fff;
+    position:relative;
+    left: 40px;
+    bottom: 10px;
+}
+.pass {
+    color: #fff;
+    position:relative;
+    left: 20px;
+    bottom: 10px;
 }
 
 /*メールアドレスを打ち込むところ*/
 input{
     border: 4px solid #000;
     width: 400px;
-    height: 30px;
+    height: 50px;
+    font-size: 30px;
+    background-color: #4b0082;
+    color: #fff;
+    position:relative;
+    left: 150px;
+    bottom: 40px;
 }
-.bottom{
-    width: 40px;
-    height: 40px;
+
+.loanshark{
+    width:400px;
+    position:relative;
+    left: 95px;
+    top: 50px;
+}
+.bill{
+    width: 300px;
+    height: 300px;
+    position:relative;
+    bottom: 100px;
+}
+
+button{
+    width: 120px;
+    height: 80px;
+    font-size: 50px;
+    color: #b22222;
+    background-color: #4b0082;
+    bottom: 30px;
+    left: 0px;
+
 }
 
 .contents {
@@ -136,16 +190,5 @@ input{
     margin-top: 30px;
 }
 
-/*フッターの設定*/
-.footer {
-    background-color: #2f5167;
-    color: #fff;
-    height: 120px;
-    padding: 40px;
-}
 
-.footer-logo {
-    float: left;
-    font-size: 32px;
-}
 </style>
