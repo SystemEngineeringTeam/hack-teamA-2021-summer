@@ -1,16 +1,21 @@
 <template>
+<div>
   <div class="header">
-    <center>
     <div class="header-logo">卍亜琉派華潘堕合法賭博遊戯卍</div>
-     </center>
-     <center>
-       <div class="home" >
-      <!-- ボタン押したら任意のリンクに遷移する -->
-      <img class="slot-img" src="@/assets/money_slot_machine.png">
-      <br>
-      <button @click="$router.push('login')">遊戯する</button>
-       </div>
+  </div>
+
+  <div class="home" >
+    <center>
+    <!-- ボタン押したら任意のリンクに遷移する -->
+    <img class="alpak-img" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png">
+    <img class="slot-img" src="@/assets/money_slot_machine.png">
+    <img class="panda-img" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png">
     </center>
+    <br>
+    <center>
+    <button @click="$router.push('login')">遊戯する</button>
+    </center>
+  </div>
   </div>
 </template>
 
@@ -28,9 +33,10 @@ export default {
 <style scoped>
 /*headerの設定、背景の色*/
 .header {
+   position:relative;
   background-color: #b22222;
   color: #3f3;
-  height: 300px;
+  height: 240px;
 }
 /*heder、チーム名とかロゴ的な何かの大きさ、位置*/
 .header-logo {
@@ -54,15 +60,34 @@ button{
 /* スロットの画像 */
 .slot-img{
   /* position:relative; */
-    width:250px;
-    height: 250px;
+    width:400px;
+    height: 400px;
     /* position:relative; */
     left: 210px;
     bottom: 250px;
 }
+.panda-img{
+  /* position:relative; */
+    width:300px;
+    height:300px;
+    /* position:relative; */
+    /* left: 210px; */
+    /* bottom: 250px; */
+}
+
+.alpak-img{
+   /* position:relative; */
+    width:300px;
+    height:300px;
+    /* position:relative; */
+    /* left: 210px; */
+    /* bottom: 250px; */
+}
+
 .home{
   font-size: 40px;
   /* color:#000000; */
   background-color:#000000
+   /* height: 300px; */
 }
 </style>
