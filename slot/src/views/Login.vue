@@ -24,7 +24,6 @@
         <div class="check">
           <button @click="login()">ログイン</button>
         </div>
-         
       </div>
       
       <div class="contact-form"></div>
@@ -32,17 +31,18 @@
           
           <a href="/singup"><li class="header-item">ようこそ！</li></a>
       </div>
-
-      
-
       <img class="loanshark" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9593.png">
       <img class="loanshark2" src="https://frame-illust.com/fi/wp-content/uploads/2017/03/9694.png">
+      <selector></selector>
   </div>
 </template>
 
 <script>
-// 覚える
+import Selector from '@/components/ImageSelector.vue';
 export default {
+  components: {
+    Selector
+  },
   data: () => {
     return {
         // 変数定義（今回はメールアドレスとパスワード）
@@ -52,26 +52,20 @@ export default {
   },
 // メゾット定義
   methods: {
-    login() {
-      this.axios
-    //   今回はポストに接続するので.postにする。第一引数に宛先を指定、第二引数に送りたいデータを指定する
-        .post("http://localhost:8080/login", {
+    async login() {
+      try {
+        var res = await this.axios.post("http://localhost:8080/login", {
           email: this.mail,
           password: this.password,
-        },)
-        // 成功した場合（.then)console.logにresponseを返す
-        .then((response) => {
-          console.log(response);
-          location.href = '/main';
-        })
-        // 失敗した場合(.catch)console.logにerrorを返す
-        .catch((error) => {
-          console.log(error);
         });
+        this.$cookie.set("token", res.data.token);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+        alert("ログインに失敗しました");
+      }
     },
   },
-//   非同期通信
-  actions: {},
 };
 </script>
 <style scoped>
