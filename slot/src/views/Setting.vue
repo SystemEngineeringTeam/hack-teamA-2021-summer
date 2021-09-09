@@ -45,7 +45,7 @@ export default {
       });
       item.selected = !item.selected
     },
-    PostSetting() {
+    async PostSetting() {
       var selected = [];
       this.itemsList.forEach(element => {
         var select = element.item.filter(item => item.selected)[0].src;
@@ -55,17 +55,21 @@ export default {
       });
       // var selected = this.itemsList.filter(item => item.selected);
       console.log(selected.join(':'));
-      this.axios.post('http://localhost:8080/setting', {
-        path: selected.join(':'),
-        email: "test@test" //emailに置き換えてください
+      try{
+        var res = await this.axios.post("http://localhost:8080/setting",{
+          "path": selected.join(':')
+        },{
+          headers:{
+            Authorization: "Bearer " + this.$cookie.get("token"),
+          }
+        })
+        console.log(res);
+      }catch(e){
+        console.log(e);
       }
-      ).then(function (response) {
-        console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      });
     },
   },
+  
   async created() {
     var res = await this.axios.get("http://localhost:8080/images");
     var data = res.data.path;
