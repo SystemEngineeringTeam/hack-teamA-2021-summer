@@ -27,10 +27,7 @@
     </div>
     <div class="copy-container">
       <v-btn @click="PostSetting">保存</v-btn>
-
-      <router-link to="/main">
-        <v-btn>スロットに戻る </v-btn>
-      </router-link>
+      <v-btn href="/main" style=" font-size: 16px;">スロットに戻る</v-btn>
     </div>
   </div>
 </template>
@@ -41,7 +38,7 @@ export default {
     return {
       selected: "selected",
       itemsList: [],
-      itemname: ["7", "ベル", "チェリー", "リプレイ"]
+      itemname: ["7", "ベル", "チェリー", "リプレイ"],
     };
   },
   methods: {
@@ -101,6 +98,8 @@ export default {
     });
     console.log(this.itemsList);
     console.log(data);
+
+    this.$emit("sendImg", this.images);
   },
 };
 </script>

@@ -85,6 +85,7 @@ export default {
         this.spin();
       }, 50);
     },
+    
     // ストップ時のメゾット
     stop() {
       if (this.isSelected) {

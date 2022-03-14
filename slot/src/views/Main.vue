@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="flexbox flexbox-left">
-      <slotComponent v-on:sendImg="receiveImg" />
-      <img v-for="image in this.childImg" :src="image" v-bind:key="image.id" />
+      <slot-Component v-on:sendImg="receiveImg" />
+      <img v-for="image in childImg" :src="image" v-bind:key="image.id" />
     </div>
     <main>
       <div class="dis">
@@ -43,10 +43,13 @@
         </div>
       </div>
     </main>
-    <v-btn>
-      <router-link to="/setting" style="text-decoration:" none
-        >絵柄変更</router-link
-      >
+    <v-btn
+      href="/setting"
+      style=" font-size: 16px;
+      width: 120px;
+      height: 80px;"
+    >
+      絵柄変更
     </v-btn>
     <chart v-if="showChart"></chart>
   </div>
@@ -171,7 +174,7 @@ input {
 }
 </style>
 <script>
-import slotComponent from "@/components/slotCmp.vue";
+import slotComponent from "@/components/slotComponent.vue";
 import Chart from "../components/Chart.vue";
 // import App from "@/views/App.vue";
 export default {
@@ -234,7 +237,7 @@ export default {
     },
     receiveImg(images) {
       this.childImg = images;
-      console.log("hoge", images);
+      console.log(images);
     },
     total() {
       this.axios
